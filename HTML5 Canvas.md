@@ -68,4 +68,13 @@
     - 定义两条线段相连时，相连处的连接方式
     - 有 3 个可能的值，分别是：`round`, `bevel` and `miter`。默认值是 `miter`。
     - 如果 2 个相连部分在同一方向，那么 lineJoin 不会产生任何效果
+  
+  - shadow属性
+  
+    - `shadowColor`
+    - `shadowOffsetX`
+    - `shadowOffsetY`
+    - `shadowBlur`
+
+
 
