@@ -68,4 +68,32 @@
     - 定义两条线段相连时，相连处的连接方式
     - 有 3 个可能的值，分别是：`round`, `bevel` and `miter`。默认值是 `miter`。
     - 如果 2 个相连部分在同一方向，那么 lineJoin 不会产生任何效果
+  
+  - shadow属性
+  
+    - `shadowColor`
+    - `shadowOffsetX`
+    - `shadowOffsetY`
+    - `shadowBlur`
 
+- **弧线和曲线**
+
+  - 弧线
+
+    - `arc(x, y, radius， startAngle, endAngle, counterClockWise)`
+    - x, y：弧所对应的圆心坐标
+    - radius：元的半径
+    - startAngle, endAngle：以X轴为基准，定义开始和结束的位置弧度（弧度制）
+    - counterClockWise：绘制的方向（顺时针：false| 逆时针：true）
+
+  - 二次曲线
+
+    - `quadraticCurveTo(controlX, controlY, endX, endY)`
+
+    - controlX, controlY：控制点坐标
+
+      - 控制点：
+
+        ![image-20230309231052214](D:\git\knowledge\images\quadraticCurve.png)
+
+      - 参考：[从零开始学图形学：10分钟看懂贝塞尔曲线 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/344934774)
