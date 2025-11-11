@@ -156,7 +156,7 @@ D. コンパイルエラーが発生する - 提示されたコードは、java.
 
 4. 問題文: クラスパスのルートに以下の 3 つのプロパティファイルが存在する場合、指定された Java コードを実行するとどの文字列が出力されますか。
 
-```java
+```
 ファイルの内容:
 
 Messages.properties
@@ -167,8 +167,9 @@ message=English
 
 Messages_en_US.properties
 message=American English
+```
 
-コード:
+```java
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -200,7 +201,7 @@ D. MissingResourceExceptionがスローされる - getBundleメソッドに指�
 
 5. 問題文: 以下の前提条件のもとで、指定された Java コードを実行した結果として正しいものはどれですか。
 
-```java
+```
 前提条件:
 
 有効な JDBC Connection オブジェクト conn が存在する。
@@ -212,8 +213,9 @@ id | name
 20 | Keyboard
 30 | Mouse
 40 | Webcam
+```
 
-コード:
+```java
 import java.sql.*;
 
 public class JdbcCursorTest {
@@ -333,9 +335,9 @@ D. com.example.app モジュールのコンパイル時にエラーが発生す�
 
 ```java
 
-    import java.util.HashSet;
-    import java.util.Objects;
-    import java.util.Set;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 class Employee {
 private int id;
@@ -359,12 +361,12 @@ private String name;
 }
 
 public class SetBehavior {
-public static void main(String[] args) {
-Set<Employee> employees = new HashSet<>();
-employees.add(new Employee(1, "Suzuki"));
-employees.add(new Employee(1, "Sato"));
-System.out.println(employees.size());
-}
+    public static void main(String[] args) {
+        Set<Employee> employees = new HashSet<>();
+        employees.add(new Employee(1, "Suzuki"));
+        employees.add(new Employee(1, "Sato"));
+        System.out.println(employees.size());
+    }
 }
 
 ```
@@ -393,12 +395,12 @@ D. 0 - add メソッドは正常に機能し、セットに要素が追加され
 
 ```java
 
-    import java.util.List;
-    import java.util.function.Predicate;
+import java.util.List;
+import java.util.function.Predicate;
 
 public class PredicateChain {
-public static void main(String[] args) {
-List<String> data = List.of("Java", "Python", "Go", "JavaScript");
+    public static void main(String[] args) {
+        List<String> data = List.of("Java", "Python", "Go", "JavaScript");
 
         Predicate<String> p1 = s -> s.length() > 4;
         Predicate<String> p2 = s -> s.contains("Java");
@@ -406,10 +408,8 @@ List<String> data = List.of("Java", "Python", "Go", "JavaScript");
         long count = data.stream()
             .filter(p1.or(p2.negate()))
             .count();
-
         System.out.println(count);
     }
-
 }
 ```
 
@@ -444,21 +444,21 @@ D. 4 - "Java"という要素は、長さが 4 以下であり、かつ'Java'と�
 
 ```java
 
-    import java.io.IOException;
+import java.io.IOException;
 
 class CustomException extends Exception {}
 
 class Base {
-void performAction() throws CustomException {
-System.out.println("Base action");
-}
+    void performAction() throws CustomException {
+        System.out.println("Base action");
+    }
 }
 
 class Derived extends Base {
-@Override
-void performAction() throws IOException {
-System.out.println("Derived action");
-}
+    @Override
+    void performAction() throws IOException {
+        System.out.println("Derived action");
+    }
 }
 
 ```
@@ -533,23 +533,23 @@ import java.lang.annotation.Target;
 @interface Testable {}
 
 class MyTestSuite {
-@Testable
-public void testCaseA() {}
+    @Testable
+    public void testCaseA() {}
 
     public void testCaseB() {}
 
 }
 
 public class AnnotationChecker {
-public static void main(String[] args) {
-int count = 0;
-for (var method : MyTestSuite.class.getDeclaredMethods()) {
-if (method.isAnnotationPresent(Testable.class)) {
-count++;
-}
-}
-System.out.println(count);
-}
+    public static void main(String[] args) {
+        int count = 0;
+        for (var method : MyTestSuite.class.getDeclaredMethods()) {
+            if (method.isAnnotationPresent(Testable.class)) {
+                count++;
+            }
+        }
+        System.out.println(count);
+    }
 }
 ```
 
@@ -574,10 +574,10 @@ D. コンパイルエラーが発生する - 提示されたコードは、ア�
 
 ```java
 
-    // Shape.java
-    public sealed interface Shape permits Circle, Rectangle {
-    double getArea();
-    }
+// Shape.java
+public sealed interface Shape permits Circle, Rectangle {
+double getArea();
+}
 
 // Circle.java
 public final class Circle implements Shape {
@@ -626,19 +626,18 @@ D. Triangle クラスのコンパイル時にエラーが発生する - 正解�
 
 ```java
 
-    import java.util.List;
-    import java.util.stream.Collectors;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class StreamReduceTest {
-public static void main(String[] args) {
-List<String> items = List.of("A", "B", "C");
+    public static void main(String[] args) {
+    List<String> items = List.of("A", "B", "C");
 
-        String result = items.stream()
-            .reduce("-", (s1, s2) -> s1 + s2);
+    String result = items.stream()
+        .reduce("-", (s1, s2) -> s1 + s2);
 
-        System.out.println(result);
+    System.out.println(result);
     }
-
 }
 ```
 
@@ -663,36 +662,34 @@ D. コンパイルエラーが発生する - 提示されたコードは、Strea
 
 ```java
 
-    class Task implements Runnable {
+class Task implements Runnable {
     private volatile boolean running = true;
 
-        public void stopTask() {
-            running = false;
-            System.out.println("Stop signal sent.");
-        }
-
-        @Override
-        public void run() {
-            while (running) {
-                // 作業を実行していると仮定
-            }
-            System.out.println("Task finished.");
-        }
-
+    public void stopTask() {
+        running = false;
+        System.out.println("Stop signal sent.");
     }
 
+    @Override
+    public void run() {
+        while (running) {
+            // 作業を実行していると仮定
+        }
+        System.out.println("Task finished.");
+    }
+}
+
 public class ConcurrencyTest {
-public static void main(String[] args) throws InterruptedException {
-Task task = new Task();
-Thread thread = new Thread(task);
-thread.start();
+    public static void main(String[] args) throws InterruptedException {
+        Task task = new Task();
+        Thread thread = new Thread(task);
+        thread.start();
 
         Thread.sleep(100);
         task.stopTask();
         thread.join();
         System.out.println("Main thread finished.");
     }
-
 }
 
 ```
@@ -717,18 +714,18 @@ D. 実行時に InterruptedException がスローされて終了する - Interru
 
 ```
 
-15. 問題文: 以下の Record クラスと main メソッドを持つクラスがあります。Record は Java 17 で導入されたレコード・クラスです。このコードを実```java
-    行した結果として正しいものはどれですか。
+15. 問題文: 以下の Record クラスと main メソッドを持つクラスがあります。Record は Java 17 で導入されたレコード・クラスです。このコードを実行した結果として正しいものはどれですか。
 
-        import java.util.Objects;
+```java
+import java.util.Objects;
 
 record Point(int x, int y) {}
 
 public class RecordTest {
-public static void main(String[] args) {
-Point p1 = new Point(10, 20);
-Point p2 = new Point(10, 20);
-Point p3 = new Point(20, 10);
+    public static void main(String[] args) {
+        Point p1 = new Point(10, 20);
+        Point p2 = new Point(10, 20);
+        Point p3 = new Point(20, 10);
 
         boolean b1 = p1 == p2;
         boolean b2 = p1.equals(p2);
@@ -736,7 +733,6 @@ Point p3 = new Point(20, 10);
 
         System.out.println(b1 + ", " + b2 + ", " + b3);
     }
-
 }
 
 ```
@@ -766,11 +762,12 @@ p1.equals(p3): p1 と p3 は x と y の値が異なるため、equals は false
 C. false, false, false - p1.equals(p2)の評価が誤っています。レコードの equals メソッドは、状態（フィールドの値）に基づいて等価性を判断します。
 D. true, true, true - p1 == p2 および p1.equals(p3)の評価が誤っています。==は参照を比較し、p3 は p1 とは状態が異なるため equals は false を返します。
 
-````
+```
 
-16. 問題文: カレントディレクトリに以下の内容を持つ config.properties というファイルが存在する前提で、指定された Java コードを実行した際の出```java
-力を選択してください。
-    config.properties ファイルの内容:
+16. 問題文: カレントディレクトリに以下の内容を持つ config.properties というファイルが存在する前提で、指定された Java コードを実行した際の出力を選択してください。
+
+```
+config.properties ファイルの内容:
 
 # Database settings
 
@@ -784,29 +781,30 @@ app.name=MainApp
 # app.version=1.2
 
 app.mode=production
+```
 
-コード:
+```java
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
 public class FileProcessor {
-public static void main(String[] args) throws IOException {
-Path filePath = Path.of("config.properties");
-long count = 0;
-try (Stream<String> lines = Files.lines(filePath)) {
-count = lines
-.map(String::trim)
-.filter(line -> !line.startsWith("#"))
-.filter(line -> !line.isEmpty())
-.count();
-}
-System.out.println(count);
-}
+    public static void main(String[] args) throws IOException {
+        Path filePath = Path.of("config.properties");
+        long count = 0;
+        try (Stream<String> lines = Files.lines(filePath)) {
+            count = lines
+                .map(String::trim)
+                .filter(line -> !line.startsWith("#"))
+                .filter(line -> !line.isEmpty())
+                .count();
+        }
+        System.out.println(count);
+    }
 }
 
-````
+```
 
 ```
 
@@ -840,28 +838,28 @@ D. 7 - filter 処理が適用されず、ファイル内の全ての行（コメ
 
 ```java
 
-    class MyResource implements AutoCloseable {
+class MyResource implements AutoCloseable {
     private String name;
 
-        public MyResource(String name) {
-            this.name = name;
-            System.out.println(name + " opened.");
-        }
-
-        @Override
-        public void close() {
-            System.out.println(name + " closed.");
-        }
-
+    public MyResource(String name) {
+        this.name = name;
+        System.out.println(name + " opened.");
     }
 
+    @Override
+    public void close() {
+        System.out.println(name + " closed.");
+    }
+
+}
+
 public class TryWithResourcesOrder {
-public static void main(String[] args) {
-try (MyResource r1 = new MyResource("R1");
-MyResource r2 = new MyResource("R2")) {
-System.out.println("Try block executing.");
-}
-}
+    public static void main(String[] args) {
+        try (MyResource r1 = new MyResource("R1");
+        MyResource r2 = new MyResource("R2")) {
+            System.out.println("Try block executing.");
+        }
+    }
 }
 ```
 
@@ -901,12 +899,12 @@ D. コンパイルエラーが発生する - try-with-resources 文で複数の�
 
 ```java
 
-    import java.util.stream.Collectors;
-    import java.util.stream.Stream;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CollectorGrouping {
-public static void main(String[] args) {
-Stream<String> stream = Stream.of("apple", "apricot", "banana", "blueberry", "cherry");
+    public static void main(String[] args) {
+        Stream<String> stream = Stream.of("apple", "apricot", "banana", "blueberry", "cherry");
 
         var result = stream.collect(
             Collectors.groupingBy(
@@ -945,25 +943,25 @@ D. コンパイルエラーが発生する - Collectors.groupingBy に分類関�
 
 ```java
 
-    public class FinallyFlow {
+public class FinallyFlow {
 
-        public static int calculate() {
-            try {
-                System.out.print("A");
-                return 10 / 0; // ArithmeticExceptionが発生
-            } catch (ArithmeticException e) {
-                System.out.print("B");
-                return 20;
-            } finally {
-                System.out.print("C");
-            }
+    public static int calculate() {
+        try {
+            System.out.print("A");
+            return 10 / 0; // ArithmeticExceptionが発生
+        } catch (ArithmeticException e) {
+            System.out.print("B");
+            return 20;
+        } finally {
+            System.out.print("C");
         }
-
-        public static void main(String[] args) {
-            System.out.print(calculate());
-        }
-
     }
+
+    public static void main(String[] args) {
+        System.out.print(calculate());
+    }
+
+}
 ```
 
 ```
@@ -1005,22 +1003,21 @@ D. A と B が出力され、例外がスローされる - catch ブロックが
 
 ```java
 
-    import java.util.ArrayDeque;
-    import java.util.Deque;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class DequeTest {
-public static void main(String[] args) {
-Deque<String> deque = new ArrayDeque<>();
-deque.push("A");
-deque.push("B");
-deque.offerFirst("C");
-deque.offerLast("D");
+    public static void main(String[] args) {
+        Deque<String> deque = new ArrayDeque<>();
+        deque.push("A");
+        deque.push("B");
+        deque.offerFirst("C");
+        deque.offerLast("D");
 
         System.out.print(deque.pop());
         System.out.print(deque.removeLast());
         System.out.print(deque.peekFirst());
     }
-
 }
 
 ```
@@ -1063,15 +1060,17 @@ D. CDA - removeLast()が返す値を誤解した場合、例えば先頭から 2
 
 21. 問題文: 以下の Files.find メソッドを使用したコードがあります。このコードを実行した結果として最も適切な説明はどれですか。
 
-```java
-    前提:
+```
+前提:
 
 /data ディレクトリが存在する。
 
 /data ディレクトリ配下には、サブディレクトリを含めて合計 10 個のファイルと 3 個のディレクトリが存在する。
 
 10 個のファイルのうち、5 個は.txt 拡張子を持つ。
+```
 
+```java
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -1079,12 +1078,12 @@ import java.util.stream.Stream;
 
 public class FileFinder {
 public static void main(String[] args) throws IOException {
-Path startDir = Path.of("/data");
+    Path startDir = Path.of("/data");
 
-        try (Stream<Path> stream = Files.find(startDir, 3,
-                (path, attrs) -> attrs.isRegularFile() && path.toString().endsWith(".txt"))) {
-            System.out.println(stream.count());
-        }
+    try (Stream<Path> stream = Files.find(startDir, 3,
+            (path, attrs) -> attrs.isRegularFile() && path.toString().endsWith(".txt"))) {
+        System.out.println(stream.count());
+    }
     }
 
 }
@@ -1558,18 +1557,18 @@ D.
 
 ```
 
-30. 問題文: 以下の java.util.stream.Collectors.toList()メソッドを使用したコードがあります。Java 10 以降の環境でこのコードを実行した結果```java
-    として正しいものはどれですか。
+30. 問題文: 以下の java.util.stream.Collectors.toList()メソッドを使用したコードがあります。Java 10 以降の環境でこのコードを実行した結果として正しいものはどれですか。
 
-        import java.util.List;
-        import java.util.stream.Collectors;
-        import java.util.stream.Stream;
+```java
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CollectorBehavior {
-public static void main(String[] args) {
-List<String> list = Stream.of("a", "b", "c")
-.filter(s -> s.length() < 2)
-.collect(Collectors.toList());
+    public static void main(String[] args) {
+        List<String> list = Stream.of("a", "b", "c")
+        .filter(s -> s.length() < 2)
+        .collect(Collectors.toList());
 
         try {
             list.add("d");
@@ -1578,7 +1577,6 @@ List<String> list = Stream.of("a", "b", "c")
             System.out.println(e.getClass().getSimpleName());
         }
     }
-
 }
 
 ```
@@ -1601,34 +1599,36 @@ B. コンパイルエラーが発生する - List インタフェースには ad
 C. UnsupportedOperationException - 正解です。Java 10 以降、Collectors.toList()が返す List は変更不可能です。つまり、要素の追加や削除といった構造を変更する操作はサポートされていません。そのため、list.add("d")を呼び出すと、実行時に UnsupportedOperationException がスローされます。この例外が catch ブロックで捕捉され、そのクラス名が出力されます。
 D. [a, b, c] - add メソッドが例外をスローせずに単に失敗する（サイレントフェイル）ことはありません。サポートされていない操作を呼び出すと、明確に例外がスローされるのが Java コレクションフレームワークの一般的な振る舞いです。
 
-````
+```
 
-31. 問題文: 以下の java.util.concurrent.atomic.AtomicInteger クラスを使用したコードを実行した結果として、最も可能性が高い出力はどれです```java
-か。
+31. 問題文: 以下の java.util.concurrent.atomic.AtomicInteger クラスを使用したコードを実行した結果として、最も可能性が高い出力はどれですか。
 
-    import java.util.concurrent.ExecutorService;
-    import java.util.concurrent.Executors;
-    import java.util.concurrent.TimeUnit;
-    import java.util.concurrent.atomic.AtomicInteger;
-    import java.util.stream.IntStream;
+```java
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.IntStream;
 
 public class AtomicCounter {
-public static void main(String[] args) throws InterruptedException {
-AtomicInteger counter = new AtomicInteger(0);
-ExecutorService executor = Executors.newFixedThreadPool(10);
+    public static void main(String[] args) throws InterruptedException {
+    AtomicInteger counter = new AtomicInteger(0);
+    ExecutorService executor = Executors.newFixedThreadPool(10);
 
-        IntStream.range(0, 1000).forEach(i ->
-            executor.submit(counter::incrementAndGet)
-        );
+    IntStream.range(0, 1000).forEach(i ->
+        executor.submit(counter::incrementAndGet)
+    );
 
-        executor.shutdown();
-        executor.awaitTermination(1, TimeUnit.SECONDS);
+    executor.shutdown();
+    executor.awaitTermination(1, TimeUnit.SECONDS);
 
-        System.out.println(counter.get());
+    System.out.println(counter.get());
     }
 
 }
-````
+
+```
 
 ```
 A. 1000 未満のいずれかの数値
@@ -1647,18 +1647,18 @@ D. ConcurrentModificationException がスローされる - この例外は、コ
 
 ```
 
-32. 問題文: 以下の java.util.stream.Stream の dropWhile メソッドを使用したコードがあります。このコードを実行した結果として正しいものはど```java
-    れですか。
+32. 問題文: 以下の java.util.stream.Stream の dropWhile メソッドを使用したコードがあります。このコードを実行した結果として正しいものはどれですか。
 
-        import java.util.List;
-        import java.util.stream.Collectors;
-        import java.util.stream.Stream;
+```java
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DropWhileExample {
-public static void main(String[] args) {
-List<Integer> result = Stream.of(2, 4, 5, 6, 8)
-.dropWhile(n -> n % 2 == 0)
-.collect(Collectors.toList());
+    public static void main(String[] args) {
+        List<Integer> result = Stream.of(2, 4, 5, 6, 8)
+        .dropWhile(n -> n % 2 == 0)
+        .collect(Collectors.toList());
 
         System.out.println(result);
     }
@@ -1695,30 +1695,31 @@ B. [5] - この結果は、dropWhile が述語に一致しなくなった最初�
 C. [] - ストリーム内のすべての要素が述語に一致する場合、結果は空のリストになります。しかし、このストリームには奇数である 5 が含まれています。
 D. [2, 4] - この結果は、takeWhile メソッドを使用した場合の出力です。takeWhile は dropWhile とは逆の動作をします。
 
-````
+```
 
 33. 問題文: 以下のコードを実行した結果として正しいものはどれですか。
+
 ```java
 
-    import java.util.NavigableMap;
-    import java.util.TreeMap;
+import java.util.NavigableMap;
+import java.util.TreeMap;
 
 public class MapSlicing {
-public static void main(String[] args) {
-NavigableMap<Integer, String> map = new TreeMap<>();
-map.put(10, "A");
-map.put(20, "B");
-map.put(30, "C");
-map.put(40, "D");
-map.put(50, "E");
+    public static void main(String[] args) {
+        NavigableMap<Integer, String> map = new TreeMap<>();
+        map.put(10, "A");
+        map.put(20, "B");
+        map.put(30, "C");
+        map.put(40, "D");
+        map.put(50, "E");
 
         NavigableMap<Integer, String> subMap = map.subMap(15, false, 45, true);
 
         System.out.println(subMap);
-    }
+}
 
 }
-````
+```
 
 ```
 A. {20=B, 30=C, 40=D}
@@ -1745,23 +1746,25 @@ D. {10=A, 20=B, 30=C, 40=D} - fromInclusive が false であることを見落�
 
 34. 問題文: 以下の Files.mismatch メソッドを使用したコードがあります。このコードを実行した結果として正しいものはどれですか。
 
-```java
-    前提:
+```
+前提:
 
 fileA.txt の内容は ABCDE です。
 
 fileB.txt の内容は ABCFE です。
 
 両ファイルは同じディレクトリに存在します。
+```
 
+```java
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class FileMismatchTest {
-public static void main(String[] args) throws IOException {
-Path pathA = Path.of("fileA.txt");
-Path pathB = Path.of("fileB.txt");
+    public static void main(String[] args) throws IOException {
+        Path pathA = Path.of("fileA.txt");
+        Path pathB = Path.of("fileB.txt");
 
         long mismatchPosition = Files.mismatch(pathA, pathB);
 
@@ -1802,17 +1805,18 @@ D. IOException がスローされる - Files.mismatch はファイルが存在�
 
 ```
 
-35. 問題文: 以下の java.util.stream.Collectors クラスの summarizingInt メソッドを使用したコードがあります。このコードを実行した結果とし```java
-    て正しいものはどれですか。
+35. 問題文: 以下の java.util.stream.Collectors クラスの summarizingInt メソッドを使用したコードがあります。このコードを実行した結果として正しいものはどれですか。
 
-        import java.util.IntSummaryStatistics;
-        import java.util.stream.Collectors;
-        import java.util.stream.Stream;
+```java
+
+import java.util.IntSummaryStatistics;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class StatisticsCollector {
-public static void main(String[] args) {
-IntSummaryStatistics stats = Stream.of("apple", "banana", "cherry")
-.collect(Collectors.summarizingInt(String::length));
+    public static void main(String[] args) {
+        IntSummaryStatistics stats = Stream.of("apple", "banana", "cherry")
+        .collect(Collectors.summarizingInt(String::length));
 
         System.out.printf("Count=%d, Max=%d", stats.getCount(), stats.getMax());
     }
@@ -1846,29 +1850,30 @@ stats.getCount()は要素の数である 3 を返します。
 stats.getMax()はこれらの長さの最大値である 6 を返します。
 したがって、指定されたフォーマットで Count=3, Max=6 と出力されます。
 
-````
+```
 
 36. 問題文: 以下の java.time.format.DateTimeFormatter を使用したコードがあります。このコードを実行した結果として正しいものはどれですか。
+
 ```java
 
-    import java.time.LocalDate;
-    import java.time.format.DateTimeFormatter;
-    import java.time.format.FormatStyle;
-    import java.util.Locale;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Locale;
 
 public class DateFormatting {
-public static void main(String[] args) {
-LocalDate date = LocalDate.of(2025, 10, 5);
-DateTimeFormatter formatter = DateTimeFormatter
-.ofLocalizedDate(FormatStyle.FULL)
-.withLocale(Locale.JAPAN);
+    public static void main(String[] args) {
+        LocalDate date = LocalDate.of(2025, 10, 5);
+        DateTimeFormatter formatter = DateTimeFormatter
+        .ofLocalizedDate(FormatStyle.FULL)
+        .withLocale(Locale.JAPAN);
 
         System.out.println(date.format(formatter));
     }
 
 }
 
-````
+```
 
 ```
 
@@ -2026,9 +2031,9 @@ D. ClassCastException がスローされる - この例外は、順序付けで�
 ````
 
 40. 問題文: 以下の java.util.stream.Stream の reduce メソッドを使用したコードがあります。このコードを実行した結果として正しいものはどれで```java
-すか。
+    すか。
 
-    import java.util.List;
+        import java.util.List;
 
 record Sale(String item, int amount) {}
 
@@ -2173,6 +2178,7 @@ D. コンパイルエラーが発生する - flatMapToInt と String::chars メ�
 ````
 
 43. 問題文: 以下のディレクトリ構造が存在し、指定された Java コードを実行したとします。実行結果として最も適切なものはどれですか。
+
 ```java
     ディレクトリ構造:
     app/
@@ -2208,7 +2214,7 @@ return FileVisitResult.CONTINUE;
 });
 }
 }
-````
+```
 
 ```
 A. 下記の内容が順不同で出力される。
@@ -2359,7 +2365,8 @@ es.shutdown();
 ````
 
 45. 問題文: java.nio.file パッケージを使用してファイル操作を行います。ディレクトリ/app/source に data.log ファイルが存在し、ディレクト```java
-リ/app/target にも同名の data.log ファイルが存在する状況を考えます。/app/source/data.log を/app/target ディレクトリに移動させ、既存の/app/target/data.log を上書きするコードとして、正しく動作するものはどれですか。なお、必要な java.nio.file.\*クラスはインポート済みで、メソッドがスローする可能性のあるチェック例外は適切に処理されているものとします。
+    リ/app/target にも同名の data.log ファイルが存在する状況を考えます。/app/source/data.log を/app/target ディレクトリに移動させ、既存の/app/target/data.log を上書きするコードとして、正しく動作するものはどれですか。なお、必要な java.nio.file.\*クラスはインポート済みで、メソッドがスローする可能性のあるチェック例外は適切に処理されているものとします。
+
 ````
 
 ```
@@ -2539,6 +2546,7 @@ e.printStackTrace();
 ````
 
 47. 問題文: 以下の Java コードを実行したとき、標準出力に表示される結果はどれですか。
+
 ```java
 
     import java.util.List;
@@ -2556,7 +2564,7 @@ Optional<String> result = fruits.stream()
     }
 
 }
-````
+```
 
 ```
 A. apple-apricot
@@ -2677,6 +2685,7 @@ D. com.data: requires com.report; と com.report: exports com.data.model; - 不�
 ````
 
 51. 問題文: 以下のコードを実行した結果として、コンソールに出力される値はどれですか。
+
 ```java
 
     import java.util.List;
@@ -2689,7 +2698,7 @@ Integer result = numbers.stream()
 System.out.println(result);
 }
 }
-````
+```
 
 ```
 A. 160
@@ -2759,10 +2768,10 @@ D. 空文字 - name が空文字になるのは、pstmt.setString(1, "")のよ�
 ````
 
 53. 問題文: 以下のコードでは、java.time.LocalDate と java.time.format.DateTimeFormatter を使用して日付の書式設定を行っています。この```java
-コードを実行した結果、コンソールに出力される内容はどれですか。
+    コードを実行した結果、コンソールに出力される内容はどれですか。
 
-    import java.time.LocalDate;
-    import java.time.format.DateTimeFormatter;
+        import java.time.LocalDate;
+        import java.time.format.DateTimeFormatter;
 
 public class Main {
 public static void main(String[] args) {
@@ -2771,6 +2780,7 @@ DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd E");
 System.out.println(date.format(formatter));
 }
 }
+
 ````
 
 ```
@@ -2886,10 +2896,10 @@ D. {Author Y=Tale B, Author X=Tale A, Tale C} - Collectors.toMap の第三引数
 ````
 
 56. 問題文: 以下のコードスニペットは、java.nio.file.Path の relativize メソッドの動作を示しています。このコードを実行した結果、コンソール```java
-に出力されるものはどれですか。
+    に出力されるものはどれですか。
 
-    import java.nio.file.Path;
-    import java.nio.file.Paths;
+        import java.nio.file.Path;
+        import java.nio.file.Paths;
 
 public class Main {
 public static void main(String[] args) {
@@ -3108,19 +3118,20 @@ D. コンパイルエラーが発生する - Set に追加するクラスが equ
 ````
 
 61. 問題文: 以下のコードスニペットは、Java 17 の switch 式を利用しています。このコードを実行した結果、コンソールに出力されるものはどれです```java
-か。
+    か。
 
-    public class Main {
-    public static void main(String[] args) {
-    String day = "WED";
-    String type = switch (day) {
-    case "MON", "TUE", "WED", "THU", "FRI" -> "Weekday";
-    case "SAT", "SUN" -> "Weekend";
-    default -> "Invalid day";
-    };
-    System.out.println(type);
-    }
-    }
+        public class Main {
+        public static void main(String[] args) {
+        String day = "WED";
+        String type = switch (day) {
+        case "MON", "TUE", "WED", "THU", "FRI" -> "Weekday";
+        case "SAT", "SUN" -> "Weekend";
+        default -> "Invalid day";
+        };
+        System.out.println(type);
+        }
+        }
+
 ````
 
 ```
@@ -3234,9 +3245,9 @@ D. コードは予測不能な結果を生成し、500 以外の値を出力す�
 ````
 
 64. 問題文: employees テーブルに複数のレコードが存在し、有効な Connection オブジェクト conn が利用可能であるとします。以下の JDBC コード```java
-を実行した際の結果として、最も適切な説明はどれですか。
+    を実行した際の結果として、最も適切な説明はどれですか。
 
-    import java.sql.\*;
+        import java.sql.\*;
 
 public class Main {
 public static void main(String[] args) {
@@ -3467,19 +3478,19 @@ D. [apple, apricot, blueberry] - この選択肢は、"banana"のみが削除さ
 ````
 
 69. 問題文: 以下の try-with-resources 文を使用したコードスニペットがあります。Resource クラスの close メソッドと try ブロックの両方で例```java
-外がスローされる場合、どのような結果になりますか。
+    外がスローされる場合、どのような結果になりますか。
 
-    class Resource implements AutoCloseable {
-    public void process() {
-    System.out.print("Process ");
-    throw new RuntimeException("Error in process");
-    }
-    @Override
-    public void close() throws Exception {
-    System.out.print("Close ");
-    throw new Exception("Error in close");
-    }
-    }
+        class Resource implements AutoCloseable {
+        public void process() {
+        System.out.print("Process ");
+        throw new RuntimeException("Error in process");
+        }
+        @Override
+        public void close() throws Exception {
+        System.out.print("Close ");
+        throw new Exception("Error in close");
+        }
+        }
 
 public class Main {
 public static void main(String[] args) {
@@ -3493,6 +3504,7 @@ System.out.print(", Suppressed:" + t.getMessage());
 }
 }
 }
+
 ````
 
 ```
@@ -3572,6 +3584,7 @@ D. 実行時に java.io.NotSerializableException がスローされる - User �
 ````
 
 71. 問題文: 以下のジェネリクスのワイルドカードを使用したコードがあります。main メソッド内のどの行でコンパイルエラーが発生しますか。
+
 ```java
 
     import java.util.List;
@@ -3597,7 +3610,7 @@ System.out.println(n.intValue());
     }
 
 }
-````
+```
 
 ```
 A. line 1 と line 2
