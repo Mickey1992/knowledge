@@ -576,28 +576,28 @@ D. コンパイルエラーが発生する - 提示されたコードは、ア�
 
 // Shape.java
 public sealed interface Shape permits Circle, Rectangle {
-double getArea();
+    double getArea();
 }
 
 // Circle.java
 public final class Circle implements Shape {
-private final double radius;
-public Circle(double radius) { this.radius = radius; }
-public double getArea() { return Math.PI _ radius _ radius; }
+    private final double radius;
+    public Circle(double radius) { this.radius = radius; }
+    public double getArea() { return Math.PI _ radius _ radius; }
 }
 
 // Rectangle.java
 public non-sealed class Rectangle implements Shape {
-private final double width, height;
-public Rectangle(double width, double height) { this.width = width; this.height = height; }
-public double getArea() { return width \* height; }
+    private final double width, height;
+    public Rectangle(double width, double height) { this.width = width; this.height = height; }
+    public double getArea() { return width \* height; }
 }
 
 // Triangle.java
 public class Triangle implements Shape {
-private final double base, height;
-public Triangle(double base, double height) { this.base = base; this.height = height; }
-public double getArea() { return (base \* height) / 2; }
+    private final double base, height;
+    public Triangle(double base, double height) { this.base = base; this.height = height; }
+    public double getArea() { return (base \* height) / 2; }
 }
 
 ```
@@ -1118,15 +1118,15 @@ D. 13 - この数値はファイルとディレクトリの総数です。attrs.
 
 ```java
 
-    import java.util.HashMap;
-    import java.util.Map;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MapOperations {
-public static void main(String[] args) {
-Map<String, String> map = new HashMap<>();
-map.put("key1", "val1");
-map.put("key2", "val2");
-map.put("key3", null);
+    public static void main(String[] args) {
+        Map<String, String> map = new HashMap<>();
+        map.put("key1", "val1");
+        map.put("key2", "val2");
+        map.put("key3", null);
 
         map.compute("key2", (k, v) -> v.concat("-new"));
         map.compute("key3", (k, v) -> "val3");
@@ -1172,13 +1172,13 @@ D. NullPointerException がスローされる - compute("key3", ...)の呼び出
 
 ```java
 
-    import java.util.stream.IntStream;
+import java.util.stream.IntStream;
 
 public class StreamShortCircuit {
-public static void main(String[] args) {
-boolean result = IntStream.rangeClosed(1, 10)
-.peek(i -> System.out.print(i + " "))
-.anyMatch(i -> i % 4 == 0);
+    public static void main(String[] args) {
+        boolean result = IntStream.rangeClosed(1, 10)
+        .peek(i -> System.out.print(i + " "))
+        .anyMatch(i -> i % 4 == 0);
 
         System.out.println("\nResult: " + result);
     }
@@ -1223,39 +1223,43 @@ D. 1 2 3 \nResult: false - anyMatch の条件は 4 で満たされるため、�
 
 24. 問題文: 以下のディレクトリ構造が存在する前提で、指定された Java コードを実行した際の出力を選択してください。
 
-```java
+```
     ディレクトリ構造:
     /app
     |-- config/
-    | `-- user.properties
-`-- data.log
+    |-- user.properties
+    -- data.log
+```
 
+```java
 コード:
 import java.io.IOException;
-import java.nio.file.\*;
+import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 
 public class FileTreeWalker {
-public static void main(String[] args) throws IOException {
-Path start = Path.of("/app");
-Files.walkFileTree(start, new SimpleFileVisitor<>() {
-@Override
-public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
-System.out.print("D-"); // Directory
-return FileVisitResult.CONTINUE;
-}
-@Override
-public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-System.out.print("F-"); // File
-return FileVisitResult.CONTINUE;
-}
-@Override
-public FileVisitResult postVisitDirectory(Path dir, IOException exc) {
-System.out.print("E-"); // End of Directory
-return FileVisitResult.CONTINUE;
-}
-});
-}
+    public static void main(String[] args) throws IOException {
+        Path start = Path.of("/app");
+        Files.walkFileTree(start, new SimpleFileVisitor<>() {
+            @Override
+            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
+            System.out.print("D-"); // Directory
+            return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+                System.out.print("F-"); // File
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult postVisitDirectory(Path dir, IOException exc) {
+                System.out.print("E-"); // End of Directory
+                return FileVisitResult.CONTINUE;
+            }
+        });
+    }
 }
 
 ```
@@ -1298,30 +1302,30 @@ D. D-D-E-F-F-E- - この出力は、全てのディレクトリを訪れた後�
 
 ```java
 
-    import java.util.concurrent.BrokenBarrierException;
-    import java.util.concurrent.CyclicBarrier;
-    import java.util.concurrent.Executors;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.Executors;
 
 public class BarrierTest {
-public static void main(String[] args) {
-var executor = Executors.newFixedThreadPool(4);
-var barrier = new CyclicBarrier(3, () -> System.out.print("Barrier-Action "));
+    public static void main(String[] args) {
+        var executor = Executors.newFixedThreadPool(4);
+        var barrier = new CyclicBarrier(3, () -> System.out.print("Barrier-Action "));
 
-        try {
-            for (int i = 0; i < 6; i++) {
-                executor.submit(() -> {
-                    try {
-                        System.out.print("A ");
-                        barrier.await();
-                        System.out.print("B ");
-                    } catch (InterruptedException | BrokenBarrierException e) {
-                        e.printStackTrace();
-                    }
-                });
+            try {
+                for (int i = 0; i < 6; i++) {
+                    executor.submit(() -> {
+                        try {
+                            System.out.print("A ");
+                            barrier.await();
+                            System.out.print("B ");
+                        } catch (InterruptedException | BrokenBarrierException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
+            } finally {
+                executor.shutdown();
             }
-        } finally {
-            executor.shutdown();
-        }
     }
 
 }
@@ -1358,15 +1362,15 @@ D. A A A A A A Barrier-Action Barrier-Action B B B B B B - 6 つのスレッド�
 
 ```java
 
-    import java.util.concurrent.ExecutorService;
-    import java.util.concurrent.Executors;
-    import java.util.concurrent.locks.ReentrantLock;
-    import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.TimeUnit;
 
 public class LockTest {
-public static void main(String[] args) throws InterruptedException {
-ReentrantLock lock = new ReentrantLock();
-ExecutorService executor = Executors.newFixedThreadPool(2);
+    public static void main(String[] args) throws InterruptedException {
+        ReentrantLock lock = new ReentrantLock();
+        ExecutorService executor = Executors.newFixedThreadPool(2);
 
         Runnable task = () -> {
             lock.lock();
@@ -1412,15 +1416,15 @@ D. L U L U - 選択肢 B と同じく、2 つのタスクが完全に逐次的�
 
 ```java
 
-    import java.time.LocalDate;
-    import java.time.Month;
-    import java.time.Period;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.Period;
 
 public class PeriodTest {
-public static void main(String[] args) {
-LocalDate startDate = LocalDate.of(2025, Month.JANUARY, 31);
-Period period = Period.ofMonths(1);
-LocalDate endDate = startDate.plus(period);
+    public static void main(String[] args) {
+        LocalDate startDate = LocalDate.of(2025, Month.JANUARY, 31);
+        Period period = Period.ofMonths(1);
+        LocalDate endDate = startDate.plus(period);
 
         System.out.println(endDate);
     }
@@ -1449,19 +1453,19 @@ D. DateTimeException がスローされる - java.time API は、このような
 
 ```java
 
-    import java.util.stream.Collectors;
-    import java.util.List;
-    import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Map;
 
 record Item(String category, String name) {}
 
 public class ToMapTest {
-public static void main(String[] args) {
-List<Item> items = List.of(
-new Item("Fruit", "Apple"),
-new Item("Vegetable", "Carrot"),
-new Item("Fruit", "Banana")
-);
+    public static void main(String[] args) {
+        List<Item> items = List.of(
+        new Item("Fruit", "Apple"),
+        new Item("Vegetable", "Carrot"),
+        new Item("Fruit", "Banana")
+        );
 
         try {
             Map<String, String> map = items.stream()
@@ -1503,20 +1507,20 @@ D. {Fruit=[Apple, Banana], Vegetable=[Carrot]} - この出力形式は、Collect
 
 ```java
 
-    public class TextBlockFormatting {
+public class TextBlockFormatting {
     public static void main(String[] args) {
-    String template = """
-    {
-    "name": "%s",
-    "id": %d
-    }
-    """;
-    String formatted = String.format(template, "Alice", 101);
-
-            System.out.println(formatted);
+        String template = """
+        {
+        "name": "%s",
+        "id": %d
         }
+        """;
+        String formatted = String.format(template, "Alice", 101);
 
+        System.out.println(formatted);
     }
+
+}
 ```
 
 ```
@@ -1613,17 +1617,17 @@ import java.util.stream.IntStream;
 
 public class AtomicCounter {
     public static void main(String[] args) throws InterruptedException {
-    AtomicInteger counter = new AtomicInteger(0);
-    ExecutorService executor = Executors.newFixedThreadPool(10);
+        AtomicInteger counter = new AtomicInteger(0);
+        ExecutorService executor = Executors.newFixedThreadPool(10);
 
-    IntStream.range(0, 1000).forEach(i ->
-        executor.submit(counter::incrementAndGet)
-    );
+        IntStream.range(0, 1000).forEach(i ->
+            executor.submit(counter::incrementAndGet)
+        );
 
-    executor.shutdown();
-    executor.awaitTermination(1, TimeUnit.SECONDS);
+        executor.shutdown();
+        executor.awaitTermination(1, TimeUnit.SECONDS);
 
-    System.out.println(counter.get());
+        System.out.println(counter.get());
     }
 
 }
@@ -1899,12 +1903,12 @@ D. 2025-10-05 - この形式は、事前定義フォーマッタの DateTimeForm
 
 ```java
 
-    import java.nio.file.Path;
+import java.nio.file.Path;
 
 public class PathManipulation {
-public static void main(String[] args) {
-Path p1 = Path.of("/app/data/../logs/log.txt");
-Path p2 = p1.normalize();
+    public static void main(String[] args) {
+        Path p1 = Path.of("/app/data/../logs/log.txt");
+        Path p2 = p1.normalize();
 
         System.out.println(p2.getName(1));
     }
@@ -1941,12 +1945,12 @@ D. IllegalArgumentException がスローされる - normalize()によってパ�
 
 ```java
 
-    import java.util.List;
-    import java.util.Optional;
+import java.util.List;
+import java.util.Optional;
 
 public class ParallelStreamBehavior {
-public static void main(String[] args) {
-List<Integer> numbers = List.of(1, 2, 3, 4, 5, 6, 7, 8);
+    public static void main(String[] args) {
+        List<Integer> numbers = List.of(1, 2, 3, 4, 5, 6, 7, 8);
 
         Optional<Integer> result = numbers.parallelStream()
             .filter(n -> n > 4)
@@ -1979,27 +1983,27 @@ D. コードは常に 8 を出力する - findAny が常に最後の要素を返
 
 ```
 
-39. 問題文: 以下の PriorityQueue を使用したコードがあります。Task レコードは Comparable を実装しており、priority フィールドの昇順（値が```java
-    小さいほど優先度が高い）で順序付けられます。このコードを実行した結果として正しいものはどれですか。
+39. 問題文: 以下の PriorityQueue を使用したコードがあります。Task レコードは Comparable を実装しており、priority フィールドの昇順（値が小さいほど優先度が高い）で順序付けられます。このコードを実行した結果として正しいものはどれですか。
 
-        import java.util.PriorityQueue;
-        import java.util.Queue;
+```java
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 record Task(String name, int priority) implements Comparable<Task> {
-@Override
-public int compareTo(Task other) {
-return Integer.compare(this.priority, other.priority);
-}
-@Override
-public String toString() { return this.name; }
+    @Override
+    public int compareTo(Task other) {
+        return Integer.compare(this.priority, other.priority);
+    }
+    @Override
+    public String toString() { return this.name; }
 }
 
 public class PriorityQueueNaturalOrder {
-public static void main(String[] args) {
-Queue<Task> taskQueue = new PriorityQueue<>();
-taskQueue.offer(new Task("Write Report", 3));
-taskQueue.offer(new Task("Fix Bug", 1));
-taskQueue.offer(new Task("Attend Meeting", 2));
+    public static void main(String[] args) {
+        Queue<Task> taskQueue = new PriorityQueue<>();
+        taskQueue.offer(new Task("Write Report", 3));
+        taskQueue.offer(new Task("Fix Bug", 1));
+        taskQueue.offer(new Task("Attend Meeting", 2));
 
         System.out.print(taskQueue.poll());
         System.out.print(taskQueue.poll());
@@ -2028,22 +2032,22 @@ B. Write ReportFix BugAttend Meeting - この出力は、要素が追加され�
 C. Write ReportAttend MeetingFix Bug - この出力は、優先度が降順（値が大きいほど優先度が高い）であると誤解した場合の結果です。
 D. ClassCastException がスローされる - この例外は、順序付けできない要素（Comparable を実装していないなど）を PriorityQueue に追加しようとした場合にスローされます。Task レコードは Comparable を正しく実装しているため、この例外は発生しません。
 
-````
+```
 
-40. 問題文: 以下の java.util.stream.Stream の reduce メソッドを使用したコードがあります。このコードを実行した結果として正しいものはどれで```java
-    すか。
+40. 問題文: 以下の java.util.stream.Stream の reduce メソッドを使用したコードがあります。このコードを実行した結果として正しいものはどれですか。
 
-        import java.util.List;
+```java
+import java.util.List;
 
 record Sale(String item, int amount) {}
 
 public class StreamReduceComplex {
-public static void main(String[] args) {
-List<Sale> sales = List.of(
-new Sale("Apple", 200),
-new Sale("Orange", 300),
-new Sale("Banana", 150)
-);
+    public static void main(String[] args) {
+        List<Sale> sales = List.of(
+        new Sale("Apple", 200),
+        new Sale("Orange", 300),
+        new Sale("Banana", 150)
+        );
 
         int totalAmount = sales.stream().reduce(
             0,
@@ -2056,7 +2060,7 @@ new Sale("Banana", 150)
 
 }
 
-````
+```
 
 ```
 
@@ -2090,13 +2094,13 @@ D. 150 - 150 はリスト内の最後の Sale オブジェクトの amount で�
 
 ```java
 
-    import java.util.ArrayList;
-    import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ParallelStatefulLambda {
-public static void main(String[] args) {
-List<Integer> sourceList = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-List<Integer> resultList = new ArrayList<>();
+    public static void main(String[] args) {
+        List<Integer> sourceList = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        List<Integer> resultList = new ArrayList<>();
 
         sourceList.parallelStream()
             .map(i -> {
@@ -2128,14 +2132,14 @@ D. 結果は非決定的であり、10 未満の数値を出力するか、実�
 
 ```
 
-42. 問題文: 以下の java.util.stream.Stream の flatMapToInt メソッドを使用したコードがあります。このコードを実行した結果として正しいもの```java
-    はどれですか。（文字'a'の ASCII 値は 97、'b'は 98、'c'は 99 とします）
+42. 問題文: 以下の java.util.stream.Stream の flatMapToInt メソッドを使用したコードがあります。このコードを実行した結果として正しいものはどれですか。（文字'a'の ASCII 値は 97、'b'は 98、'c'は 99 とします）
 
-        import java.util.List;
+```java
+import java.util.List;
 
 public class StreamFlattenPrimitive {
-public static void main(String[] args) {
-List<String> data = List.of("a", "bc");
+    public static void main(String[] args) {
+        List<String> data = List.of("a", "bc");
 
         long sum = data.stream()
             .flatMapToInt(String::chars)
@@ -2175,11 +2179,11 @@ B. 3 - この数値は、flatMapToInt によって生成された IntStream の�
 C. 197 - この数値は、"bc"の文字コードの合計（98 + 99 = 197）ですが、"a"の文字コードが含まれていません。
 D. コンパイルエラーが発生する - flatMapToInt と String::chars メソッド参照の組み合わせは、Stream<String>を IntStream に変換するための有効で一般的な方法です。コードは構文的に正しく、コンパイルエラーは発生しません。
 
-````
+```
 
 43. 問題文: 以下のディレクトリ構造が存在し、指定された Java コードを実行したとします。実行結果として最も適切なものはどれですか。
 
-```java
+```
     ディレクトリ構造:
     app/
     ├── data/
@@ -2188,31 +2192,33 @@ D. コンパイルエラーが発生する - flatMapToInt と String::chars メ�
     └── logs/
     ├── app.log
     └── old_log.txt
+```
 
-コード:
+```java
 import java.io.IOException;
-import java.nio.file.\*;
+import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 
 public class FileTreeWalker {
-public static void main(String[] args) throws IOException {
-Path start = Paths.get("app");
-Files.walkFileTree(start, new SimpleFileVisitor<>() {
-@Override
-public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-if (file.getFileName().toString().equals("report.csv")) {
-System.out.println("File found: " + file);
-return FileVisitResult.TERMINATE;
-}
-return FileVisitResult.CONTINUE;
-}
-@Override
-public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
-System.out.println("Visiting dir: " + dir);
-return FileVisitResult.CONTINUE;
-}
-});
-}
+    public static void main(String[] args) throws IOException {
+        Path start = Paths.get("app");
+        Files.walkFileTree(start, new SimpleFileVisitor<>() {
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+                if (file.getFileName().toString().equals("report.csv")) {
+                    System.out.println("File found: " + file);
+                    return FileVisitResult.TERMINATE;
+                }
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
+                System.out.println("Visiting dir: " + dir);
+                return FileVisitResult.CONTINUE;
+            }
+        });
+    }
 }
 ```
 
@@ -2266,48 +2272,50 @@ visitFile メソッドの戻り値の型は FileVisitResult であり、FileVisi
 
 ```
 
-44. 問題文: 以下のコードは、ExecutorService を使用して非同期にタスクを実行し、その結果を取得することを目的としています。1 から 10 までの整数```java
-    の合計を計算し、その結果をコンソールに出力するコードとして、正しくコンパイルされ、意図通りに動作するものはどれですか。なお、コードは必要な java.util.concurrent.\*クラスがインポートされており、main メソッドは Exception をスローするシグネチャを持つものとします。
+44. 問題文: 以下のコードは、ExecutorService を使用して非同期にタスクを実行し、その結果を取得することを目的としています。1 から 10 までの整数の合計を計算し、その結果をコンソールに出力するコードとして、正しくコンパイルされ、意図通りに動作するものはどれですか。なお、コードは必要な java.util.concurrent.\*クラスがインポートされており、main メソッドは Exception をスローするシグネチャを持つものとします。
 
-```
-
-```
-
+```java
 A.
 ExecutorService es = Executors.newSingleThreadExecutor();
 Future<Integer> future = es.execute(() -> {
-int sum = 0;
-for (int i = 1; i <= 10; i++) { sum += i; }
-return sum;
+    int sum = 0;
+    for (int i = 1; i <= 10; i++) { sum += i; }
+    return sum;
 });
 System.out.println(future.get());
 es.shutdown();
+```
 
+```java
 B.
 ExecutorService es = Executors.newSingleThreadExecutor();
 Future<?> future = es.submit(() -> {
-int sum = 0;
-for (int i = 1; i <= 10; i++) { sum += i; }
-// No return value
+    int sum = 0;
+    for (int i = 1; i <= 10; i++) { sum += i; }
+    // No return value
 });
 System.out.println(future.get());
 es.shutdown();
+```
 
+```java
 C.
 ExecutorService es = Executors.newSingleThreadExecutor();
 Future<Integer> future = es.submit(() -> {
-int sum = 0;
-for (int i = 1; i <= 10; i++) { sum += i; }
-return sum;
+    int sum = 0;
+    for (int i = 1; i <= 10; i++) { sum += i; }
+    return sum;
 });
 System.out.println(future.get());
 es.shutdown();
+```
 
+```java
 D.
 ExecutorService es = Executors.newSingleThreadExecutor();
 Future<Integer> future = es.submit(() -> {
-int sum = 0;
-for (int i = 1; i <= 10; i++) { sum += i; }
+    int sum = 0;
+    for (int i = 1; i <= 10; i++) { sum += i; }
 });
 System.out.println(future.get());
 es.shutdown();
@@ -2362,14 +2370,11 @@ es.shutdown();
 
 この選択肢はコンパイルエラーになります。submit メソッドに渡されたラムダ式には return 文がありません。そのため、このラムダ式は Callable<Integer>ではなく Runnable として型推論されます。Runnable を引数にとる submit メソッドの戻り値は Future<?>型（実質的には Future<Void>）であり、Future<Integer>型の変数 future に代入しようとしているため、型の不一致でエラーが発生します。
 
-````
-
-45. 問題文: java.nio.file パッケージを使用してファイル操作を行います。ディレクトリ/app/source に data.log ファイルが存在し、ディレクト```java
-    リ/app/target にも同名の data.log ファイルが存在する状況を考えます。/app/source/data.log を/app/target ディレクトリに移動させ、既存の/app/target/data.log を上書きするコードとして、正しく動作するものはどれですか。なお、必要な java.nio.file.\*クラスはインポート済みで、メソッドがスローする可能性のあるチェック例外は適切に処理されているものとします。
-
-````
-
 ```
+
+45. 問題文: `java.nio.file` パッケージを使用してファイル操作を行います。ディレクトリ`/app/source に data.log` ファイルが存在し、ディレクトリ/app/target にも同名の data.log ファイルが存在する状況を考えます。`/app/source/data.log` を`/app/target` ディレクトリに移動させ、既存の`/app/target/data.log` を上書きするコードとして、正しく動作するものはどれですか。なお、必要な `java.nio.file.*`クラスはインポート済みで、メソッドがスローする可能性のあるチェック例外は適切に処理されているものとします。
+
+```java
 A.
 Path source = Paths.get("/app/source/data.log");
 Path targetDir = Paths.get("/app/target");
@@ -2421,63 +2426,66 @@ Files.move(source, targetDir);
 
 ```
 
-46. 問題文: DriverManager.getConnection()メソッドが有効な Connection オブジェクトを返すと仮定します。JDBC を使用してデータベースから従```java
-    業員情報を取得する際、リソースリークを防ぐために Connection, PreparedStatement, ResultSet を確実にクローズするための、最も堅牢で推奨されるコードはどれですか。
+46. 問題文: DriverManager.getConnection()メソッドが有効な Connection オブジェクトを返すと仮定します。JDBC を使用してデータベースから従業員情報を取得する際、リソースリークを防ぐために Connection, PreparedStatement, ResultSet を確実にクローズするための、最も堅牢で推奨されるコードはどれですか。
 
-```
-
-```
+```java
 
 A.
 Connection con = null;
 PreparedStatement ps = null;
 ResultSet rs = null;
 try {
-con = DriverManager.getConnection(URL);
-ps = con.prepareStatement("SELECT _ FROM employees");
-rs = ps.executeQuery();
-while (rs.next()) { /_ ... \*/ }
+    con = DriverManager.getConnection(URL);
+    ps = con.prepareStatement("SELECT _ FROM employees");
+    rs = ps.executeQuery();
+    while (rs.next()) { /_ ... \*/ }
 } catch (SQLException e) {
-e.printStackTrace();
+    e.printStackTrace();
 } finally {
-try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
-try { if (ps != null) ps.close(); } catch (SQLException e) { e.printStackTrace(); }
-try { if (con != null) con.close(); } catch (SQLException e) { e.printStackTrace(); }
+    try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+    try { if (ps != null) ps.close(); } catch (SQLException e) { e.printStackTrace(); }
+    try { if (con != null) con.close(); } catch (SQLException e) { e.printStackTrace(); }
 }
+```
 
+```java
 B.
 try (Connection con = DriverManager.getConnection(URL);
-PreparedStatement ps = con.prepareStatement("SELECT \* FROM employees")) {
-try (ResultSet rs = ps.executeQuery()) {
-while (rs.next()) {
-// ...
-}
-}
+PreparedStatement ps = con.prepareStatement("SELECT * FROM employees")) {
+    try (ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+        // ...
+        }
+    }
 } catch (SQLException e) {
-e.printStackTrace();
+    e.printStackTrace();
 }
+```
 
+```java
 C.
 ResultSet rs = null;
 try (Connection con = DriverManager.getConnection(URL);
-PreparedStatement ps = con.prepareStatement("SELECT \* FROM employees")) {
-rs = ps.executeQuery();
-while (rs.next()) {
-// ...
-}
+PreparedStatement ps = con.prepareStatement("SELECT * FROM employees")) {
+    rs = ps.executeQuery();
+    while (rs.next()) {
+    // ...
+    }
 } catch (SQLException e) {
-e.printStackTrace();
+    e.printStackTrace();
 }
+```
 
+```java
 D.
 try (Connection con = DriverManager.getConnection(URL);
-PreparedStatement ps = con.prepareStatement("SELECT \* FROM employees");
-ResultSet rs = ps.executeQuery()) {
-while (rs.next()) {
-// ...
-}
+PreparedStatement ps = con.prepareStatement("SELECT * FROM employees");
+    ResultSet rs = ps.executeQuery()) {
+    while (rs.next()) {
+    // ...
+    }
 } catch (SQLException e) {
-e.printStackTrace();
+    e.printStackTrace();
 }
 
 ```
@@ -2543,22 +2551,22 @@ e.printStackTrace();
 
 この選択肢は一見正しく見えますが、潜在的なリソースリークの問題があります。もし con.prepareStatement は成功し、ps.executeQuery が失敗して例外をスローした場合、生成された PreparedStatement オブジェクト ps がクローズされない可能性があります。ResultSet は PreparedStatement に依存するため、分けて管理するのがより安全です。
 
-````
+```
 
 47. 問題文: 以下の Java コードを実行したとき、標準出力に表示される結果はどれですか。
 
 ```java
 
-    import java.util.List;
-    import java.util.Optional;
+import java.util.List;
+import java.util.Optional;
 
 public class StreamApiQuestion {
-public static void main(String[] args) {
-List<String> fruits = List.of("Apple", "Orange", "Banana", "Apricot");
-Optional<String> result = fruits.stream()
-.filter(s -> s.startsWith("A"))
-.map(String::toLowerCase)
-.reduce((s1, s2) -> s1 + "-" + s2);
+    public static void main(String[] args) {
+        List<String> fruits = List.of("Apple", "Orange", "Banana", "Apricot");
+        Optional<String> result = fruits.stream()
+        .filter(s -> s.startsWith("A"))
+        .map(String::toLowerCase)
+        .reduce((s1, s2) -> s1 + "-" + s2);
 
         result.ifPresent(System.out::println);
     }
@@ -2587,31 +2595,31 @@ D. apple,apricot - reduce メソッドの引数として渡されたラムダ式
 
 ```java
 
-    import java.util.concurrent.ExecutorService;
-    import java.util.concurrent.Executors;
-    import java.util.concurrent.Future;
-    import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ExecutionException;
 
 public class ParallelProcessingQuiz {
-public static void main(String[] args) {
-ExecutorService executor = null;
-try {
-executor = Executors.newSingleThreadExecutor();
-Future<String> future = executor.submit(() -> {
-throw new IllegalStateException("Execution error");
-});
-String result = future.get();
-System.out.println(result);
-} catch (ExecutionException e) {
-System.out.println(e.getCause().getClass().getSimpleName());
-} catch (Exception e) {
-System.out.println(e.getClass().getSimpleName());
-} finally {
-if (executor != null) {
-executor.shutdown();
-}
-}
-}
+    public static void main(String[] args) {
+        ExecutorService executor = null;
+        try {
+            executor = Executors.newSingleThreadExecutor();
+            Future<String> future = executor.submit(() -> {
+                throw new IllegalStateException("Execution error");
+            });
+            String result = future.get();
+            System.out.println(result);
+        } catch (ExecutionException e) {
+            System.out.println(e.getCause().getClass().getSimpleName());
+        } catch (Exception e) {
+            System.out.println(e.getClass().getSimpleName());
+        } finally {
+            if (executor != null) {
+                executor.shutdown();
+            }
+        }
+    }
 }
 
 ```
@@ -2639,10 +2647,6 @@ D. コンパイルエラーが発生する - 不正解です。このコード�
 49. 問題文: Locale オブジェクトの生成に関する説明として、最も適切なものはどれですか。
 
 ```java
-
-```
-
-```
 A. new Locale("ja", "JP")は、言語コードのみを指定してインスタンスを生成する。
 B. Locale.Builder を使用して、言語、スクリプト、国などの要素を段階的に設定してインスタンスを生成できる。
 C. Locale.getDefault()は、常に en-US に対応する Locale オブジェクトを返す。
@@ -2659,12 +2663,9 @@ D. Locale クラスのコンストラクタは、引数として渡された文�
 
 ```
 
-50. 問題文: 2 つのモジュール com.data と com.report があります。com.data モジュールは com.data.model パッケージを外部に公開していま```java
-    す。com.report モジュールが com.data.model パッケージ内のクラスを利用するためには、それぞれの module-info.java ファイルにどのような宣言が必要ですか。
+50. 問題文: 2 つのモジュール com.data と com.report があります。com.data モジュールは com.data.model パッケージを外部に公開しています。com.report モジュールが com.data.model パッケージ内のクラスを利用するためには、それぞれの module-info.java ファイルにどのような宣言が必要ですか。
 
-```
-
-```
+```java
 
 A. com.data: opens com.data.model; と com.report: requires com.data;
 B. com.data: exports com.data.model; と com.report: requires com.data;
@@ -2682,21 +2683,21 @@ B. com.data: exports com.data.model; と com.report: requires com.data; - 正解
 C. com.data: exports com.data.model; と com.report: imports com.data.model; - 不正解です。module-info.java ファイルにおいて、モジュール間の依存関係を定義するために imports というキーワードは使用されません。import は Java のソースファイル内でクラスをインポートするために使用されるものです。
 D. com.data: requires com.report; と com.report: exports com.data.model; - 不正解です。依存関係の方向が逆です。com.report モジュールが com.data モジュールを利用するため、com.data がパッケージを exports し、com.report が com.data を requires する必要があります。
 
-````
+```
 
 51. 問題文: 以下のコードを実行した結果として、コンソールに出力される値はどれですか。
 
 ```java
 
-    import java.util.List;
+import java.util.List;
 
 public class Main {
-public static void main(String[] args) {
-List<Integer> numbers = List.of(5, 2, 8, 1);
-Integer result = numbers.stream()
-.reduce(2, (a, b) -> a \* b);
-System.out.println(result);
-}
+    public static void main(String[] args) {
+        List<Integer> numbers = List.of(5, 2, 8, 1);
+        Integer result = numbers.stream()
+        .reduce(2, (a, b) -> a * b);
+        System.out.println(result);
+    }
 }
 ```
 
@@ -2717,17 +2718,17 @@ D. 2 - この値は reduce 操作に与えられた初期値です。ストリ�
 
 ```
 
-52. 問題文: employees という名前のテーブルに、id が 101、name が'Tanaka'のレコードが存在します。以下の JDBC コードが正常に実行された後、```java
-    このレコードの name の値はどうなりますか。
+52. 問題文: employees という名前のテーブルに、id が 101、name が'Tanaka'のレコードが存在します。以下の JDBC コードが正常に実行された後、このレコードの name の値はどうなりますか。
 
-        import java.sql.\*;
+```java
+import java.sql.*;
 
 public class Main {
-public static void main(String[] args) {
-// DriverManager.getConnection()は有効な Connection を返すと仮定
-String url = "jdbc:yourdatabase:yourdb";
-String user = "user";
-String password = "password";
+    public static void main(String[] args) {
+        // DriverManager.getConnection()は有効な Connection を返すと仮定
+        String url = "jdbc:yourdatabase:yourdb";
+        String user = "user";
+        String password = "password";
 
         String sql = "UPDATE employees SET name = ? WHERE id = ?";
 
@@ -2765,23 +2766,23 @@ B. null - UPDATE 文が実行されていないため、name カラムが null �
 C. Tanaka - 正解です。このコードでは PreparedStatement オブジェクトが作成され、setString()と setInt()によってパラメータが設定されていますが、データベースに対して更新を実行する executeUpdate()メソッドが呼び出されていません。そのため、データベース上のデータは一切変更されず、'Tanaka'のままです。
 D. 空文字 - name が空文字になるのは、pstmt.setString(1, "")のように設定され、executeUpdate()が呼び出された場合です。このコードでは更新自体が行われないため、値は変更されません。
 
-````
+```
 
-53. 問題文: 以下のコードでは、java.time.LocalDate と java.time.format.DateTimeFormatter を使用して日付の書式設定を行っています。この```java
-    コードを実行した結果、コンソールに出力される内容はどれですか。
+53. 問題文: 以下のコードでは、java.time.LocalDate と java.time.format.DateTimeFormatter を使用して日付の書式設定を行っています。このコードを実行した結果、コンソールに出力される内容はどれですか。
 
-        import java.time.LocalDate;
-        import java.time.format.DateTimeFormatter;
+```java
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Main {
-public static void main(String[] args) {
-LocalDate date = LocalDate.of(2025, 1, 5);
-DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd E");
-System.out.println(date.format(formatter));
-}
+    public static void main(String[] args) {
+        LocalDate date = LocalDate.of(2025, 1, 5);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd E");
+        System.out.println(date.format(formatter));
+    }
 }
 
-````
+```
 
 ```
 A. 2025/01/05 Sun
@@ -2804,23 +2805,23 @@ D. 2025/01/05 Sunday - パターン文字 E は曜日の短縮形を出力しま
 
 ```java
 
-    import java.util.concurrent.\*;
+import java.util.concurrent.*;
 
 public class Main {
-public static void main(String[] args) throws Exception {
-ExecutorService service = Executors.newSingleThreadExecutor();
-try {
-Future<String> future = service.submit(() -> {
-System.out.print("Task");
-return "Complete";
-});
-System.out.print("Main");
-String result = future.get();
-System.out.print(result);
-} finally {
-service.shutdown();
-}
-}
+    public static void main(String[] args) throws Exception {
+        ExecutorService service = Executors.newSingleThreadExecutor();
+        try {
+            Future<String> future = service.submit(() -> {
+                System.out.print("Task");
+                return "Complete";
+            });
+            System.out.print("Main");
+            String result = future.get();
+            System.out.print(result);
+        } finally {
+            service.shutdown();
+        }
+    }
 }
 
 ```
@@ -2845,11 +2846,11 @@ D. TaskComplete - メインスレッドの System.out.print("Main")という処�
 
 ```
 
-55. 問題文: 以下のコードスニペットについて、Book レコードと Main クラスが定義されています。このコードを実行した結果、コンソールに出力される内```java
-    容はどれですか。
+55. 問題文: 以下のコードスニペットについて、Book レコードと Main クラスが定義されています。このコードを実行した結果、コンソールに出力される内容はどれですか。
 
-        // Book.java
-        public record Book(String title, String author) {}
+```java
+// Book.java
+public record Book(String title, String author) {}
 
 // Main.java
 import java.util.stream.Stream;
@@ -2857,12 +2858,12 @@ import java.util.stream.Collectors;
 import java.util.Map;
 
 public class Main {
-public static void main(String[] args) {
-Stream<Book> books = Stream.of(
-new Book("Tale A", "Author X"),
-new Book("Tale B", "Author Y"),
-new Book("Tale C", "Author X")
-);
+    public static void main(String[] args) {
+        Stream<Book> books = Stream.of(
+        new Book("Tale A", "Author X"),
+        new Book("Tale B", "Author Y"),
+        new Book("Tale C", "Author X")
+        );
 
         Map<String, String> map = books.collect(
             Collectors.toMap(Book::author, Book::title, (t1, t2) -> t1 + ", " + t2)
@@ -2893,18 +2894,18 @@ B. {Author Y=Tale B, Author X=Tale A, Tale C} - この選択肢は、値の結�
 C. {Author Y=Tale B, Author X=Tale A, Tale C}のような形式で、実行時にキーの順序が不定なもの - 正解です。ストリームから収集された Map のデフォルト実装（HashMap）は、キーの順序を保証しません。キー"Author X"が重複するため、マージ関数が適用され、その値は"Tale A, Tale C"となります。キー"Author Y"の値は"Tale B"です。したがって、この 2 つのエントリを含むマップが出力されますが、その表示順序は実行ごとに変わる可能性があります。
 D. {Author Y=Tale B, Author X=Tale A, Tale C} - Collectors.toMap の第三引数であるマージ関数は、重複したキーに関連付けられた値をどのようにマージするかを定義します。この場合、"Tale A"と"Tale C"は結合され、"Tale A, Tale C"という単一の文字列になります。この選択肢では、値が 2 つの別々の文字列として表現されており、不正です。
 
-````
+```
 
-56. 問題文: 以下のコードスニペットは、java.nio.file.Path の relativize メソッドの動作を示しています。このコードを実行した結果、コンソール```java
-    に出力されるものはどれですか。
+56. 問題文: 以下のコードスニペットは、java.nio.file.Path の relativize メソッドの動作を示しています。このコードを実行した結果、コンソールに出力されるものはどれですか。
 
-        import java.nio.file.Path;
-        import java.nio.file.Paths;
+```java
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Main {
-public static void main(String[] args) {
-Path p1 = Paths.get("/app/src/main");
-Path p2 = Paths.get("/app/build/classes");
+    public static void main(String[] args) {
+        Path p1 = Paths.get("/app/src/main");
+        Path p2 = Paths.get("/app/build/classes");
 
         Path result = p1.relativize(p2);
         System.out.println(result);
@@ -2912,7 +2913,7 @@ Path p2 = Paths.get("/app/build/classes");
 
 }
 
-````
+```
 
 ```
 
@@ -2936,24 +2937,27 @@ D. ../../../app/build/classes - このパスは、3 階層上がってから app
 
 57. 問題文: クラスパス上に以下の 3 つのプロパティファイルが存在します。
 
-```java
+```
 
 Messages.properties (内容: message=Default)
 
 Messages_ja.properties (内容: message=Japanese)
 
 Messages_ja_JP.properties (内容: message=Japanese (Japan))
+```
 
 このとき、以下の Java コードを実行した結果として、コンソールに出力されるものはどれですか。
+
+```java
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class Main {
-public static void main(String[] args) {
-Locale locale = Locale.JAPAN; // new Locale("ja", "JP") と等価
-ResourceBundle rb = ResourceBundle.getBundle("Messages", locale);
-System.out.println(rb.getString("message"));
-}
+    public static void main(String[] args) {
+        Locale locale = Locale.JAPAN; // new Locale("ja", "JP") と等価
+        ResourceBundle rb = ResourceBundle.getBundle("Messages", locale);
+        System.out.println(rb.getString("message"));
+    }
 }
 ```
 
@@ -2978,21 +2982,21 @@ D. コンパイルエラーが発生する - このコードは ResourceBundle �
 
 ```java
 
-    // Item.java
-    public record Item(String name, int price) {
+// Item.java
+public record Item(String name, int price) {
     public Item {
-    if (price < 0) {
-    throw new IllegalArgumentException("Price cannot be negative");
+        if (price < 0) {
+            throw new IllegalArgumentException("Price cannot be negative");
+        }
     }
-    }
-    }
+}
 
 // Main.java
 public class Main {
-public static void main(String[] args) {
-Item item1 = new Item("Apple", 150);
-Item item2 = new Item("Apple", 150);
-Item item3 = new Item("Orange", 150);
+    public static void main(String[] args) {
+        Item item1 = new Item("Apple", 150);
+        Item item2 = new Item("Apple", 150);
+        Item item3 = new Item("Orange", 150);
 
         System.out.print(item1 == item2);
         System.out.print(", ");
@@ -3029,28 +3033,28 @@ D. true, true, true - この選択肢は、item1 == item2 と item1.equals(item3
 
 ```java
 
-    // Animal.java
-    public abstract class Animal {
+// Animal.java
+public abstract class Animal {
     public abstract void speak();
-    }
+}
 
 // Dog.java
 public class Dog extends Animal {
-public void speak() { System.out.println("Woof"); }
-public void fetch() { System.out.println("Fetch"); }
+    public void speak() { System.out.println("Woof"); }
+    public void fetch() { System.out.println("Fetch"); }
 }
 
 // Cat.java
 public class Cat extends Animal {
-public void speak() { System.out.println("Meow"); }
+    public void speak() { System.out.println("Meow"); }
 }
 
 // Main.java
 public class Main {
-public static void main(String[] args) {
-Animal animal = new Dog();
-// line X
-}
+    public static void main(String[] args) {
+        Animal animal = new Dog();
+        // line X
+    }
 }
 ```
 
@@ -3071,24 +3075,24 @@ D. Dog クラスの speak メソッドを final で宣言すると、Cat クラ�
 
 ```
 
-60. 問題文: equals メソッドと hashCode メソッドをオーバーライドしていない Person クラスがあります。以下のコードを実行した結果、コンソールに```java
-    出力されるものはどれですか。
+60. 問題文: equals メソッドと hashCode メソッドをオーバーライドしていない Person クラスがあります。以下のコードを実行した結果、コンソールに出力されるものはどれですか。
 
-        import java.util.HashSet;
-        import java.util.Set;
+```java
+import java.util.HashSet;
+import java.util.Set;
 
 class Person {
-private String name;
-public Person(String name) { this.name = name; }
-// equals() and hashCode() are not overridden
+    private String name;
+    public Person(String name) { this.name = name; }
+    // equals() and hashCode() are not overridden
 }
 
 public class Main {
-public static void main(String[] args) {
-Set<Person> set = new HashSet<>();
-set.add(new Person("Alice"));
-set.add(new Person("Bob"));
-set.add(new Person("Alice"));
+    public static void main(String[] args) {
+        Set<Person> set = new HashSet<>();
+        set.add(new Person("Alice"));
+        set.add(new Person("Bob"));
+        set.add(new Person("Alice"));
 
         System.out.println(set.size());
     }
@@ -3115,24 +3119,24 @@ B. 2 - この結果は、new Person("Alice")の 2 つのインスタンスが等
 C. 3 - 正解です。Person クラスは equals()と hashCode()をオーバーライドしていないため、Object クラスのデフォルト実装を継承します。Object クラスの equals()は参照の等価性（==演算子と同じ）をチェックします。コード内で new Person()を使って 3 つの異なるオブジェクトが生成されており、それぞれメモリ上のアドレスが異なるため、HashSet はこれら 3 つをすべて異なる要素として扱います。
 D. コンパイルエラーが発生する - Set に追加するクラスが equals()と hashCode()をオーバーライドすることは、期待される動作を保証する上で重要ですが、これは Java のコンパイラが強制するルールではありません。したがって、このコードは正常にコンパイルされます。
 
-````
+```
 
-61. 問題文: 以下のコードスニペットは、Java 17 の switch 式を利用しています。このコードを実行した結果、コンソールに出力されるものはどれです```java
-    か。
+61. 問題文: 以下のコードスニペットは、Java 17 の switch 式を利用しています。このコードを実行した結果、コンソールに出力されるものはどれですか。
 
-        public class Main {
-        public static void main(String[] args) {
+```java
+public class Main {
+    public static void main(String[] args) {
         String day = "WED";
         String type = switch (day) {
-        case "MON", "TUE", "WED", "THU", "FRI" -> "Weekday";
-        case "SAT", "SUN" -> "Weekend";
-        default -> "Invalid day";
+            case "MON", "TUE", "WED", "THU", "FRI" -> "Weekday";
+            case "SAT", "SUN" -> "Weekend";
+            default -> "Invalid day";
         };
         System.out.println(type);
-        }
-        }
+    }
+}
 
-````
+```
 
 ```
 A. Weekday
@@ -3153,27 +3157,30 @@ D. コンパイルエラーが発生する - このコードは Java 14 以降�
 
 62. 問題文: 以下のディレクトリ構造が存在すると仮定します。
 
-```java
+```
     /data
     ├── reports
     │ ├── daily.csv
     │ └── weekly.csv
     └── logs
     └── app.log
-    このとき、以下の Java コードを実行した結果として、コンソールに出力されるものはどれですか。
+```
 
-    import java.nio.file.\*;
-    import java.io.IOException;
-    import java.util.stream.Stream;
+このとき、以下の Java コードを実行した結果として、コンソールに出力されるものはどれですか。
+
+```java
+import java.nio.file.*;
+import java.io.IOException;
+import java.util.stream.Stream;
 
 public class Main {
-public static void main(String[] args) throws IOException {
-Path start = Paths.get("/data");
-try (Stream<Path> stream = Files.walk(start)) {
-long count = stream.filter(p -> Files.isDirectory(p)).count();
-System.out.println(count);
-}
-}
+    public static void main(String[] args) throws IOException {
+        Path start = Paths.get("/data");
+        try (Stream<Path> stream = Files.walk(start)) {
+            long count = stream.filter(p -> Files.isDirectory(p)).count();
+            System.out.println(count);
+        }
+    }
 }
 
 ```
@@ -3198,19 +3205,19 @@ D. 6 - この値は、Files.walk によってトラバースされる全ての�
 
 ```
 
-63. 問題文: 以下のコードスニペットは、並列ストリーム(parallelStream)とステートフルなラムダ式を使用しています。このコードを実行した結果に関す```java
-    る最も正確な説明はどれですか。
+63. 問題文: 以下のコードスニペットは、並列ストリーム(parallelStream)とステートフルなラムダ式を使用しています。このコードを実行した結果に関する最も正確な説明はどれですか。
 
-        import java.util.List;
-        import java.util.ArrayList;
-        import java.util.stream.IntStream;
-        import java.util.stream.Collectors;
+```java
+import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.IntStream;
+import java.util.stream.Collectors;
 
 public class Main {
-public static void main(String[] args) {
-List<Integer> numbers = IntStream.rangeClosed(1, 1000)
-.boxed()
-.collect(Collectors.toList());
+    public static void main(String[] args) {
+        List<Integer> numbers = IntStream.rangeClosed(1, 1000)
+        .boxed()
+        .collect(Collectors.toList());
 
         List<Integer> evenNumbers = new ArrayList<>();
         numbers.parallelStream()
@@ -3242,19 +3249,19 @@ B. コードは実行時に ConcurrentModificationException をスローする -
 C. コードはコンパイルに失敗する - このコードは構文的に有効です。ラムダ式から外部の非 final な ArrayList オブジェクトのメソッドを呼び出すことは許可されています。問題はコンパイル時ではなく、実行時の並列処理の安全性にあります。
 D. コードは予測不能な結果を生成し、500 以外の値を出力する可能性がある - 正解です。ArrayList はスレッドセーフではありません。並列ストリーム内の forEach から複数のスレッドが同時に evenNumbers.add(n)を呼び出すと、データレースが発生します。これにより、リストの内部配列のサイズ変更時に更新が失われたり、意図しない上書きが発生したりする可能性があり、結果としてリストの最終的なサイズが期待値の 500 と異なる、予測不能なものになります。
 
-````
+```
 
-64. 問題文: employees テーブルに複数のレコードが存在し、有効な Connection オブジェクト conn が利用可能であるとします。以下の JDBC コード```java
-    を実行した際の結果として、最も適切な説明はどれですか。
+64. 問題文: employees テーブルに複数のレコードが存在し、有効な Connection オブジェクト conn が利用可能であるとします。以下の JDBC コードを実行した際の結果として、最も適切な説明はどれですか。
 
-        import java.sql.\*;
+```java
+import java.sql.*;
 
 public class Main {
-public static void main(String[] args) {
-// conn は有効な Connection オブジェクトと仮定
-try (Connection conn = DriverManager.getConnection("url", "user", "pass")) {
-Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-ResultSet rs = stmt.executeQuery("SELECT \* FROM employees");
+    public static void main(String[] args) {
+        // conn は有効な Connection オブジェクトと仮定
+        try (Connection conn = DriverManager.getConnection("url", "user", "pass")) {
+            Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = stmt.executeQuery("SELECT \* FROM employees");
 
             if (rs.last()) {
                 rs.afterLast();
@@ -3274,7 +3281,7 @@ ResultSet rs = stmt.executeQuery("SELECT \* FROM employees");
 
 }
 
-````
+```
 
 ```
 
@@ -3300,21 +3307,21 @@ D. "SQL Error." が出力される - Statement が ResultSet.TYPE_SCROLL_INSENSI
 
 ```java
 
-    import java.util.Optional;
+import java.util.Optional;
 
 class Database {
-public static Optional<String> findData(String key) {
-if ("Success".equals(key)) {
-return Optional.of("Data");
-}
-return Optional.empty();
-}
+    public static Optional<String> findData(String key) {
+        if ("Success".equals(key)) {
+            return Optional.of("Data");
+        }
+        return Optional.empty();
+    }
 }
 
 public class Main {
-public static Optional<String> getKey() {
-return Optional.of("Success");
-}
+    public static Optional<String> getKey() {
+        return Optional.of("Success");
+    }
 
     public static void main(String[] args) {
         String result = getKey()
@@ -3701,6 +3708,7 @@ D. Triangle.java のコンパイルに失敗する。なぜなら、Figure を�
 ````
 
 74. 問題文: 以下のコードを実行した際に出力される結果として正しいものはどれですか。
+
 ```java
 
     public class Main {
@@ -3715,7 +3723,7 @@ D. Triangle.java のコンパイルに失敗する。なぜなら、Figure を�
 
     }
 
-````
+```
 
 ```
 
@@ -4167,7 +4175,7 @@ D. Hallo - Locale.setDefault でデフォルトロケールが de_DE に設定�
 ````
 
 86. 問題文: 外部から受信したシリアライズされたデータを安全にデシリアライズするために、許可されたクラスのみをインスタンス化するように制限したいと```java
-考えています。この「デシリアライゼーション・フィルタリング」を実装するために、Java SE プラットフォームで提供されている最も適切なメカニズムはどれですか。
+    考えています。この「デシリアライゼーション・フィルタリング」を実装するために、Java SE プラットフォームで提供されている最も適切なメカニズムはどれですか。
 
 ````
 
@@ -4265,6 +4273,7 @@ D. 何も出力されない - console 変数が null になるため、try ブ�
 ````
 
 89. 問題文: 以下のコードを実行した際に出力される結果として正しいものはどれですか。
+
 ```java
 
     import java.util.List;
@@ -4281,7 +4290,7 @@ Collectors.partitioningBy(s -> s.length() > 5)
 System.out.println(result.get(true).size());
 }
 }
-````
+```
 
 ```
 A. 1
@@ -4339,19 +4348,20 @@ D. IllegalMonitorStateException が実行時にスローされる。 - この例
 ````
 
 91. 問題文: 以下のインターフェースとクラスが定義されている場合、Main クラスの main メソッド内で記述するとコンパイルエラーとなるコードはどれで```java
-すか。
+    すか。
 
-    interface Communicator {
-    default void sendMessage() {
-    System.out.println("Sending message...");
-    }
-    static void checkStatus() {
-    System.out.println("Status OK.");
-    }
-    }
+        interface Communicator {
+        default void sendMessage() {
+        System.out.println("Sending message...");
+        }
+        static void checkStatus() {
+        System.out.println("Status OK.");
+        }
+        }
 
 class Radio implements Communicator {
 }
+
 ````
 
 ```
@@ -4472,6 +4482,7 @@ D. SalarySummary{total=18000, average=6000.0} - 計算された合計値と平�
 ````
 
 94. 問題文: カレントディレクトリに以下の内容を持つ 2 つのファイル path1.txt と path2.txt が存在します。
+
 ```java
     path1.txt の内容: JavaTest
     path2.txt の内容: Javatest
@@ -4490,7 +4501,7 @@ System.out.println(Files.mismatch(p1, p2));
 }
 }
 
-````
+```
 
 ```
 
@@ -4551,13 +4562,13 @@ D. result は、処理が成功したことを示す true を格納する boolea
 ````
 
 96. 問題文: @Task アノテーションを、以下の ScheduledTask クラスのように一つのクラスに複数回適用できるようにしたいと考えています。この要件を```java
-満たすために必要なアノテーション定義の組み合わせとして、正しいものはどれですか。
+    満たすために必要なアノテーション定義の組み合わせとして、正しいものはどれですか。
 
-    @Task(priority = "High")
-    @Task(priority = "Normal")
-    public class ScheduledTask {
-    // class members
-    }
+        @Task(priority = "High")
+        @Task(priority = "Normal")
+        public class ScheduledTask {
+        // class members
+        }
 
 ````
 
@@ -4760,14 +4771,14 @@ System.out.println(list.size());
 
 ```
 
-````
+```
 
 A. 実行するたびに常に 10000 が出力される。
 B. ArrayList がスレッドセーフでないため、コンパイルエラーが発生する。
 C. 実行時に ConcurrentModificationException がスローされることが保証される。
 D. 競合状態が発生するため、10000 と出力される保証はなく、実行ごとに結果が異なる可能性がある。```
 
-````
+```
 
 ```
 
@@ -4779,3 +4790,4 @@ C. 実行時に ConcurrentModificationException がスローされることが�
 D. 競合状態が発生するため、10000 と出力される保証はなく、実行ごとに結果が異なる可能性がある。 - 正解です。ArrayList は同期化されていないコレクションです。並列ストリーム(parallel())とステートフルな中間操作（この場合は終端操作 forEach で外部の list の状態を変更している）を組み合わせると、複数のスレッドが同時に list にアクセスして変更しようとするため、競合状態（レースコンディション）が発生します。その結果、リストの最終的なサイズは予測不可能となり、10000 に満たない値になるか、あるいは実行時例外で失敗する可能性があります。
 
 ```
+
