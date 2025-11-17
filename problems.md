@@ -3261,7 +3261,7 @@ public class Main {
         // conn は有効な Connection オブジェクトと仮定
         try (Connection conn = DriverManager.getConnection("url", "user", "pass")) {
             Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ResultSet rs = stmt.executeQuery("SELECT \* FROM employees");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM employees");
 
             if (rs.last()) {
                 rs.afterLast();
@@ -3354,29 +3354,29 @@ D. コンパイルエラーが発生する - このコードは、Optional を�
 
 ```java
 
-    class Vehicle {
+class Vehicle {
     protected String type;
     Vehicle() {
-    this.type = "Unknown";
-    System.out.print("Vehicle ");
+        this.type = "Unknown";
+        System.out.print("Vehicle ");
     }
     public String getType() {
-    return type;
+        return type;
     }
-    }
+}
 
 class Car extends Vehicle {
-Car() {
-this.type = "Car";
-System.out.print("Car ");
-}
+    Car() {
+        this.type = "Car";
+        System.out.print("Car ");
+    }
 }
 
 public class Main {
-public static void main(String[] args) {
-Vehicle v = new Car();
-System.out.print(v.getType());
-}
+    public static void main(String[] args) {
+        Vehicle v = new Car();
+        System.out.print(v.getType());
+    }
 }
 
 ```
@@ -3405,14 +3405,14 @@ D. Car Vehicle Unknown - スーパークラスのコンストラクタが先に�
 
 ```java
 
-    import java.util.Map;
-    import java.util.TreeMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Main {
-public static void main(String[] args) {
-Map<String, Integer> map = new TreeMap<>();
-map.put("C", 3);
-map.put("A", 1);
+    public static void main(String[] args) {
+        Map<String, Integer> map = new TreeMap<>();
+        map.put("C", 3);
+        map.put("A", 1);
 
         map.compute("A", (k, v) -> v + 10);
         map.compute("B", (k, v) -> v == null ? 20 : v * 2);
@@ -3441,19 +3441,19 @@ D. 実行時に NullPointerException がスローされる - compute メソッ�
 
 ```
 
-68. 問題文: 以下の java.util.List の removeIf メソッドを使用したコードがあります。このコードを実行した結果、コンソールに出力されるものはど```java
-    れですか。
+68. 問題文: 以下の java.util.List の removeIf メソッドを使用したコードがあります。このコードを実行した結果、コンソールに出力されるものはどれですか。
 
-        import java.util.ArrayList;
-        import java.util.List;
+```java
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
-public static void main(String[] args) {
-List<String> list = new ArrayList<>();
-list.add("apple");
-list.add("banana");
-list.add("apricot");
-list.add("blueberry");
+    public static void main(String[] args) {
+        List<String> list = new ArrayList<>();
+        list.add("apple");
+        list.add("banana");
+        list.add("apricot");
+        list.add("blueberry");
 
         list.removeIf(s -> s.startsWith("b"));
 
@@ -3482,37 +3482,37 @@ B. [apple, apricot] - 正解です。removeIf メソッドは、ラムダ式 s -
 C. [banana, blueberry] - この選択肢は、条件に一致した要素がリストに残り、一致しなかった要素が削除された場合の結果です。removeIf は条件に一致した要素を「削除」します。
 D. [apple, apricot, blueberry] - この選択肢は、"banana"のみが削除された場合の結果です。removeIf はストリームの filter のように一度だけ一致する要素を見つけて停止するのではなく、リスト内の全ての要素を評価します。
 
-````
+```
 
-69. 問題文: 以下の try-with-resources 文を使用したコードスニペットがあります。Resource クラスの close メソッドと try ブロックの両方で例```java
-    外がスローされる場合、どのような結果になりますか。
+69. 問題文: 以下の try-with-resources 文を使用したコードスニペットがあります。Resource クラスの close メソッドと try ブロックの両方で例外がスローされる場合、どのような結果になりますか。
 
-        class Resource implements AutoCloseable {
-        public void process() {
+```java
+class Resource implements AutoCloseable {
+    public void process() {
         System.out.print("Process ");
         throw new RuntimeException("Error in process");
-        }
-        @Override
-        public void close() throws Exception {
+    }
+    @Override
+    public void close() throws Exception {
         System.out.print("Close ");
         throw new Exception("Error in close");
-        }
-        }
+    }
+}
 
 public class Main {
-public static void main(String[] args) {
-try (Resource r = new Resource()) {
-r.process();
-} catch (Exception e) {
-System.out.print("Caught:" + e.getMessage());
-for (Throwable t : e.getSuppressed()) {
-System.out.print(", Suppressed:" + t.getMessage());
-}
-}
-}
+    public static void main(String[] args) {
+        try (Resource r = new Resource()) {
+            r.process();
+        } catch (Exception e) {
+            System.out.print("Caught:" + e.getMessage());
+            for (Throwable t : e.getSuppressed()) {
+                System.out.print(", Suppressed:" + t.getMessage());
+            }
+        }
+    }
 }
 
-````
+```
 
 ```
 A. Process Close Caught:Error in process, Suppressed:Error in close
@@ -3531,15 +3531,15 @@ D. Process Close Caught:Error in close - この選択肢は、close()メソッ�
 
 ```
 
-70. 問題文: Serializable インターフェースを実装した User クラスがあります。password フィールドは transient として宣言されています。この```java
-    クラスのインスタンスをシリアライズし、その後デシリアライズする以下のコードを実行した結果、コンソールに出力されるものはどれですか。
+70. 問題文: Serializable インターフェースを実装した User クラスがあります。password フィールドは transient として宣言されています。このクラスのインスタンスをシリアライズし、その後デシリアライズする以下のコードを実行した結果、コンソールに出力されるものはどれですか。
 
-        import java.io.\*;
+```java
+import java.io.*;
 
 class User implements Serializable {
-private static final long serialVersionUID = 1L;
-String username;
-transient String password;
+    private static final long serialVersionUID = 1L;
+    String username;
+    transient String password;
 
     public User(String username, String password) {
         this.username = username;
@@ -3549,12 +3549,12 @@ transient String password;
 }
 
 public class Main {
-public static void main(String[] args) throws Exception {
-// Serialize
-ByteArrayOutputStream baos = new ByteArrayOutputStream();
-try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
-oos.writeObject(new User("testuser", "pass123"));
-}
+    public static void main(String[] args) throws Exception {
+        // Serialize
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
+            oos.writeObject(new User("testuser", "pass123"));
+        }
 
         // Deserialize
         User user = null;
@@ -3588,21 +3588,21 @@ B. testuser:null - 正解です。transient とマークされたフィールド
 C. null:null - username フィールドは transient ではないため、その値はシリアライズされ、デシリアライズ時に復元されます。したがって、username が null になることはありません。
 D. 実行時に java.io.NotSerializableException がスローされる - User クラスは Serializable インターフェースを実装しているため、そのインスタンスはシリアライズ可能です。transient フィールドを持つことはシリアライズの妨げにはならず、特定のフィールドを永続化の対象外とすることを示す正当な方法です。
 
-````
+```
 
 71. 問題文: 以下のジェネリクスのワイルドカードを使用したコードがあります。main メソッド内のどの行でコンパイルエラーが発生しますか。
 
 ```java
 
-    import java.util.List;
-    import java.util.ArrayList;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Main {
-public static void processElements(List<? extends Number> list) {
-for (Number n : list) {
-System.out.println(n.intValue());
-}
-}
+    public static void processElements(List<? extends Number> list) {
+        for (Number n : list) {
+            System.out.println(n.intValue());
+        }
+    }
 
     public static void main(String[] args) {
         List<Integer> integers = new ArrayList<>();
@@ -3640,15 +3640,15 @@ D. line 4 - line 4 (List<Object>)はコンパイルエラーになりますが�
 
 ```java
 
-    import java.util.List;
+import java.util.List;
 
 public class Main {
-public static void main(String[] args) {
-List<Integer> numbers = List.of(1, 2, 3, 4, 5);
-Integer result = numbers.stream()
-.reduce(10, (subtotal, element) -> subtotal + element);
-System.out.println(result);
-}
+    public static void main(String[] args) {
+        List<Integer> numbers = List.of(1, 2, 3, 4, 5);
+        Integer result = numbers.stream()
+        .reduce(10, (subtotal, element) -> subtotal + element);
+        System.out.println(result);
+    }
 }
 
 ```
@@ -3673,11 +3673,12 @@ D. コンパイルエラーが発生する - 提示されたコードは Java �
 
 ```
 
-73. 問題文: 以下の sealed 修飾子を使用したインターフェースとクラスの定義があります。これらのファイルをコンパイルした結果について、最も適切な説```java
-    明はどれですか。
-    Shape.java:
+73. 問題文: 以下の sealed 修飾子を使用したインターフェースとクラスの定義があります。これらのファイルをコンパイルした結果について、最も適切な説明はどれですか。
 
-        public sealed interface Shape permits Figure {}
+```java
+Shape.java:
+
+public sealed interface Shape permits Figure {}
 
 Figure.java:
 public non-sealed class Figure implements Shape {}
@@ -3705,23 +3706,23 @@ B. Figure.java のコンパイルに失敗する。なぜなら、sealed イン�
 C. Triangle.java のコンパイルに失敗する。なぜなら、Shape の permits 句に Triangle が含まれていないため - permits 句は、sealed なクラスやインターフェースを「直接」継承または実装するクラスをリストアップします。Triangle は Shape を直接実装しているわけではないため、permits 句にリストする必要はありません。
 D. Triangle.java のコンパイルに失敗する。なぜなら、Figure を拡張するクラスは final でなければならないため - この制約は、sealed クラスを拡張する場合に適用されることがあります。しかし、Figure クラスは non-sealed と宣言されているため、それを拡張するクラス（この場合は Triangle）には特別な修飾子（final、sealed、non-sealed）は要求されません。
 
-````
+```
 
 74. 問題文: 以下のコードを実行した際に出力される結果として正しいものはどれですか。
 
 ```java
 
-    public class Main {
+public class Main {
     record User(String id, String name) {}
 
-        public static void main(String[] args) {
-            User user1 = new User("001", "Alice");
-            User user2 = new User("001", "Alice");
+    public static void main(String[] args) {
+        User user1 = new User("001", "Alice");
+        User user2 = new User("001", "Alice");
 
-            System.out.println(user1.equals(user2) + ", " + (user1 == user2));
-        }
-
+        System.out.println(user1.equals(user2) + ", " + (user1 == user2));
     }
+
+}
 
 ```
 
@@ -3749,16 +3750,16 @@ D. false, true - equals メソッドは内容の等価性を評価し、==演算
 
 ```java
 
-    import java.util.concurrent.\*;
+import java.util.concurrent.*;
 
 public class Main {
-public static void main(String[] args) {
-ExecutorService es = Executors.newSingleThreadExecutor();
-Future<String> future = es.submit(() -> "Result");
-String result = future.get();
-System.out.println(result);
-es.shutdown();
-}
+    public static void main(String[] args) {
+        ExecutorService es = Executors.newSingleThreadExecutor();
+        Future<String> future = es.submit(() -> "Result");
+        String result = future.get();
+        System.out.println(result);
+        es.shutdown();
+    }
 }
 ```
 
@@ -3783,13 +3784,13 @@ D. future.get()の呼び出しで TimeoutException がスローされる。 - Ti
 
 ```java
 
-    import java.util.stream.IntStream;
-    import java.util.IntSummaryStatistics;
+import java.util.stream.IntStream;
+import java.util.IntSummaryStatistics;
 
 public class Main {
-public static void main(String[] args) {
-IntStream stream = IntStream.rangeClosed(1, 5); // 1, 2, 3, 4, 5
-IntSummaryStatistics stats = stream.summaryStatistics();
+    public static void main(String[] args) {
+        IntStream stream = IntStream.rangeClosed(1, 5); // 1, 2, 3, 4, 5
+        IntSummaryStatistics stats = stream.summaryStatistics();
 
         long sum = stats.getSum();
         long count = stats.getCount();
@@ -3825,27 +3826,27 @@ D. 10, 4 - この選択肢は、range(1, 5)（終端を含まない）を想定�
 
 ```java
 
-    public class Main {
+public class Main {
     public static void main(String[] args) {
-    System.out.println(checkReturn());
+        System.out.println(checkReturn());
     }
 
-        private static String checkReturn() {
-            try {
-                // 例外をスローする可能性がある処理
-                if (true) {
-                    throw new IllegalStateException();
-                }
-                return "From Try";
-            } catch (IllegalStateException e) {
-                return "From Catch";
-            } finally {
-                // このブロックはreturnの前に必ず実行される
-                System.out.print("From Finally ");
+    private static String checkReturn() {
+        try {
+            // 例外をスローする可能性がある処理
+            if (true) {
+                throw new IllegalStateException();
             }
+            return "From Try";
+        } catch (IllegalStateException e) {
+            return "From Catch";
+        } finally {
+            // このブロックはreturnの前に必ず実行される
+            System.out.print("From Finally ");
         }
-
     }
+
+}
 ```
 
 ```
@@ -3869,14 +3870,14 @@ D. From Try - try ブロック内で例外がスローされるため、try ブ�
 
 ```java
 
-    import java.util.Map;
-    import java.util.HashMap;
+import java.util.Map;
+import java.util.HashMap;
 
 public class Main {
-public static void main(String[] args) {
-Map<String, String> map = new HashMap<>();
-map.put("A", "Apple");
-map.put("B", "Banana");
+    public static void main(String[] args) {
+        Map<String, String> map = new HashMap<>();
+        map.put("A", "Apple");
+        map.put("B", "Banana");
 
         String key = "A";
         String value = "pple";
@@ -3914,15 +3915,15 @@ D. NullPointerException がスローされる - merge メソッドの再マッ�
 
 ```java
 
-    String sql = "SELECT name FROM products";
-    try (Statement stmt = conn.createStatement();
-    ResultSet rs = stmt.executeQuery(sql)) {
+String sql = "SELECT name FROM products";
+try (Statement stmt = conn.createStatement();
+ResultSet rs = stmt.executeQuery(sql)) {
     if (rs.next()) {
-    System.out.println(rs.getString(1));
+        System.out.println(rs.getString(1));
     }
-    } catch (SQLException e) {
+} catch (SQLException e) {
     // 例外処理
-    }
+}
 ```
 
 ```
@@ -3946,20 +3947,20 @@ D. rs.next()が false を返した場合でも、rs.getString(1)は最初の行�
 
 ```java
 
-    public class Main {
+public class Main {
     public static void main(String[] args) {
-    System.out.println(checkValue());
+        System.out.println(checkValue());
     }
 
-        private static int checkValue() {
-            try {
-                return 10;
-            } finally {
-                return 20;
-            }
+    private static int checkValue() {
+        try {
+            return 10;
+        } finally {
+            return 20;
         }
-
     }
+
+}
 
 ```
 
@@ -3986,21 +3987,21 @@ D. IllegalStateException がスローされる。 - このコードの実行パ�
 81. 問題文: 以下の 3 つのモジュールが存在する状況を考えます。
 
 ```java
-    module com.app.main の module-info.java:
+module com.app.main の module-info.java:
 
-    module com.app.main {
+module com.app.main {
     requires com.app.service;
-    }
+}
 
 module com.app.service の module-info.java:
 module com.app.service {
-requires com.app.util;
-exports com.app.service.api;
+    requires com.app.util;
+    exports com.app.service.api;
 }
 
 module com.app.util の module-info.java:
 module com.app.util {
-exports com.app.util.helper;
+    exports com.app.util.helper;
 }
 ```
 
@@ -4026,15 +4027,15 @@ D. com.app.main モジュールが com.app.util モジュールを requires す�
 
 ```java
 
-    import java.nio.file.Path;
-    import java.nio.file.Paths;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Main {
-public static void main(String[] args) {
-Path path1 = Paths.get("/app/data/files");
-Path path2 = Paths.get("/app/data/logs/2025/log.txt");
-System.out.println(path1.relativize(path2));
-}
+    public static void main(String[] args) {
+        Path path1 = Paths.get("/app/data/files");
+        Path path2 = Paths.get("/app/data/logs/2025/log.txt");
+        System.out.println(path1.relativize(path2));
+    }
 }
 
 ```
@@ -4063,12 +4064,12 @@ D. java.lang.IllegalArgumentException がスローされる - この例外は、
 
 ```java
 
-    public sealed interface Shape permits Circle, Square {
+public sealed interface Shape permits Circle, Square {
     // members
-    }
+}
 
 public final class Circle implements Shape {
-// members
+    // members
 }
 ```
 
@@ -4093,13 +4094,13 @@ D. public open class Square implements Shape { } - open は Java のキーワー
 
 ```java
 
-    import java.util.List;
-    import java.util.stream.Stream;
+import java.util.List;
+import java.util.stream.Stream;
 
 public class Main {
-public static void main(String[] args) {
-List<String> list1 = List.of("A", "B");
-List<String> list2 = List.of("C", "D", "E");
+    public static void main(String[] args) {
+        List<String> list1 = List.of("A", "B");
+        List<String> list2 = List.of("C", "D", "E");
 
         long count = Stream.of(list1, list2)
                            .flatMap(list -> list.stream())
@@ -4131,25 +4132,26 @@ D. コンパイルエラーが発生する。 - このコードは Stream API �
 
 ```
 
-85. 問題文: クラスパス上に以下のプロパティファイルが存在する状況で、提示された Java コードを実行した際に出力される結果として正しいものはどれで```java
-    すか。
-    resources/MyLabels_de.properties:
-    hello = Hallo
-    resources/MyLabels.properties:
-    hello = Hello
-    goodbye = Bye
-    resources/MyLabels_en.properties:
-    hello = Hello
+85. 問題文: クラスパス上に以下のプロパティファイルが存在する状況で、提示された Java コードを実行した際に出力される結果として正しいものはどれですか。
 
-        import java.util.Locale;
-        import java.util.ResourceBundle;
+```java
+resources/MyLabels_de.properties:
+hello = Hallo
+resources/MyLabels.properties:
+hello = Hello
+goodbye = Bye
+resources/MyLabels_en.properties:
+hello = Hello
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class Main {
-public static void main(String[] args) {
-Locale.setDefault(new Locale("de", "DE"));
-ResourceBundle bundle = ResourceBundle.getBundle("resources.MyLabels", new Locale("en"));
-System.out.println(bundle.getString("goodbye"));
-}
+    public static void main(String[] args) {
+        Locale.setDefault(new Locale("de", "DE"));
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.MyLabels", new Locale("en"));
+        System.out.println(bundle.getString("goodbye"));
+    }
 }
 
 ```
@@ -4172,12 +4174,9 @@ B. MissingResourceException がスローされる。 - この例外は、指定�
 C. Hello - "Hello"は hello キーに対応する値です。コードでは getString("goodbye")を呼び出しているため、"Hello"が出力されることはありません。
 D. Hallo - Locale.setDefault でデフォルトロケールが de_DE に設定されていますが、ResourceBundle.getBundle メソッドで new Locale("en")とロケールが明示的に指定されているため、デフォルトロケールの設定は無視され、指定された en ロケールが使用されます。
 
-````
+```
 
-86. 問題文: 外部から受信したシリアライズされたデータを安全にデシリアライズするために、許可されたクラスのみをインスタンス化するように制限したいと```java
-    考えています。この「デシリアライゼーション・フィルタリング」を実装するために、Java SE プラットフォームで提供されている最も適切なメカニズムはどれですか。
-
-````
+86. 問題文: 外部から受信したシリアライズされたデータを安全にデシリアライズするために、許可されたクラスのみをインスタンス化するように制限したいと考えています。この「デシリアライゼーション・フィルタリング」を実装するために、Java SE プラットフォームで提供されている最も適切なメカニズムはどれですか。
 
 ```
 
@@ -4203,16 +4202,16 @@ D. java.io.Serializable インターフェースに定義されている validat
 
 ```java
 
-    import java.util.List;
-    import java.util.ArrayList;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Main {
-public static void main(String[] args) {
-List<Integer> intList = new ArrayList<>();
-List<? extends Number> numList = intList;
-numList.add(20);
-System.out.println(numList.get(0));
-}
+    public static void main(String[] args) {
+        List<Integer> intList = new ArrayList<>();
+        List<? extends Number> numList = intList;
+        numList.add(20);
+        System.out.println(numList.get(0));
+    }
 }
 ```
 
@@ -4233,21 +4232,21 @@ D. System.out.println(numList.get(0)); の行でコンパイルエラーが発�
 
 ```
 
-88. 問題文: 以下のコードは java.io.Console クラスを使用してユーザーからの入力を読み取ろうとします。このコードを、対話型のコンソールが利用でき```java
-    ない一般的な統合開発環境（IDE）内から実行した場合、最も可能性の高い結果はどれですか。
+88. 問題文: 以下のコードは java.io.Console クラスを使用してユーザーからの入力を読み取ろうとします。このコードを、対話型のコンソールが利用できない一般的な統合開発環境（IDE）内から実行した場合、最も可能性の高い結果はどれですか。
 
-        import java.io.Console;
+```java
+    import java.io.Console;
 
 public class Main {
-public static void main(String[] args) {
-Console console = System.console();
-try {
-String input = console.readLine("Input: ");
-System.out.println("Output: " + input);
-} catch (Exception e) {
-System.out.println(e.getClass().getSimpleName());
-}
-}
+    public static void main(String[] args) {
+        Console console = System.console();
+        try {
+            String input = console.readLine("Input: ");
+            System.out.println("Output: " + input);
+        } catch (Exception e) {
+            System.out.println(e.getClass().getSimpleName());
+        }
+    }
 }
 
 ```
@@ -4270,25 +4269,25 @@ B. IOException - Console.readLine()メソッドは IOException をスローす�
 C. プログラムが"Input: "と表示し、入力待ちになる - この動作は、プログラムがコマンドラインなど、対話型コンソールを持つ環境で実行された場合に期待されるものです。IDE 内では System.console()が null を返すため、このようには動作しません。
 D. 何も出力されない - console 変数が null になるため、try ブロック内で NullPointerException がスローされます。この例外は catch ブロックで捕捉され、例外名が出力されるため、何も出力されないということはありません。
 
-````
+```
 
 89. 問題文: 以下のコードを実行した際に出力される結果として正しいものはどれですか。
 
 ```java
 
-    import java.util.List;
-    import java.util.Map;
-    import java.util.stream.Collectors;
-    import java.util.stream.Stream;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
-public static void main(String[] args) {
-Stream<String> fruits = Stream.of("apple", "banana", "kiwi", "orange");
-Map<Boolean, List<String>> result = fruits.collect(
-Collectors.partitioningBy(s -> s.length() > 5)
-);
-System.out.println(result.get(true).size());
-}
+    public static void main(String[] args) {
+        Stream<String> fruits = Stream.of("apple", "banana", "kiwi", "orange");
+        Map<Boolean, List<String>> result = fruits.collect(
+            Collectors.partitioningBy(s -> s.length() > 5)
+        );
+        System.out.println(result.get(true).size());
+    }
 }
 ```
 
@@ -4309,21 +4308,21 @@ D. NullPointerException がスローされる。 - Collectors.partitioningBy は
 
 ```
 
-90. 問題文: 以下の Counter クラスのインスタンスが 1 つあり、2 つの異なるスレッドがそれぞれ 1000 回ずつこのインスタンスの increment メソッ```java
-    ドを呼び出します。すべてのスレッドの処理が完了した後、getCount メソッドが返す値に関する説明として最も適切なものはどれですか。
+90. 問題文: 以下の Counter クラスのインスタンスが 1 つあり、2 つの異なるスレッドがそれぞれ 1000 回ずつこのインスタンスの increment メソッドを呼び出します。すべてのスレッドの処理が完了した後、getCount メソッドが返す値に関する説明として最も適切なものはどれですか。
 
-        class Counter {
-        private int count = 0;
+```java
+class Counter {
+    private int count = 0;
 
-            public synchronized void increment() {
-                count++;
-            }
+    public synchronized void increment() {
+        count++;
+    }
 
-            public int getCount() {
-                return count;
-            }
+    public int getCount() {
+        return count;
+    }
 
-        }
+}
 
 ```
 
@@ -4345,24 +4344,24 @@ B. 最終的な値は 1000 から 2000 の間の不確定な値になる。 - �
 C. どちらか一方のスレッドがロックを取得するため、最終的な値は 1000 になる。 - synchronized のロックはメソッドの呼び出し単位で取得・解放されます。1 つのスレッドがすべての処理を終えるまでロックを保持し続けるわけではないため、両方のスレッドが交互に increment メソッドを実行し、両方の処理が最終的な結果に反映されます。
 D. IllegalMonitorStateException が実行時にスローされる。 - この例外は、スレッドが所有していないモニター（ロック）に対して wait()や notify()などを呼び出した場合にスローされます。このコードではそのような操作は行われていないため、この例外は発生しません。
 
-````
+```
 
-91. 問題文: 以下のインターフェースとクラスが定義されている場合、Main クラスの main メソッド内で記述するとコンパイルエラーとなるコードはどれで```java
-    すか。
+91. 問題文: 以下のインターフェースとクラスが定義されている場合、Main クラスの main メソッド内で記述するとコンパイルエラーとなるコードはどれですか。
 
-        interface Communicator {
-        default void sendMessage() {
+```java
+interface Communicator {
+    default void sendMessage() {
         System.out.println("Sending message...");
-        }
-        static void checkStatus() {
+    }
+    static void checkStatus() {
         System.out.println("Status OK.");
-        }
-        }
+    }
+}
 
 class Radio implements Communicator {
 }
 
-````
+```
 
 ```
 A. new Radio().sendMessage();
@@ -4385,27 +4384,28 @@ D. Communicator c = new Radio(); c.sendMessage(); - このコードはコンパ�
 
 ```java
 
-    class BadResource implements AutoCloseable {
+class BadResource implements AutoCloseable {
     public void process() {
-    throw new IllegalArgumentException("Processing failed");
-    }
-    @Override
-    public void close() {
-    throw new IllegalStateException("Closing failed");
-    }
+        throw new IllegalArgumentException("Processing failed");
     }
 
+    @Override
+    public void close() {
+        throw new IllegalStateException("Closing failed");
+    }
+}
+
 public class Main {
-public static void main(String[] args) {
-try (BadResource br = new BadResource()) {
-br.process();
-} catch (Exception e) {
-System.out.print(e.getMessage());
-if (e.getSuppressed().length > 0) {
-System.out.print(", " + e.getSuppressed()[0].getMessage());
-}
-}
-}
+    public static void main(String[] args) {
+        try (BadResource br = new BadResource()) {
+            br.process();
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
+            if (e.getSuppressed().length > 0) {
+                System.out.print(", " + e.getSuppressed()[0].getMessage());
+            }
+        }
+    }
 }
 
 ```
@@ -4430,15 +4430,15 @@ D. Processing failed, Closing failed - 正解です。try-with-resources 文の�
 
 ```
 
-93. 問題文: Employee レコードと SalarySummary レコードが以下のように定義されています。提示されたコードを実行した際の出力として正しいものは```java
-    どれですか。
+93. 問題文: Employee レコードと SalarySummary レコードが以下のように定義されています。提示されたコードを実行した際の出力として正しいものはどれですか。
 
-        import java.util.List;
-        import java.util.stream.Collectors;
+```java
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Main {
-record Employee(String name, int salary) {}
-record SalarySummary(long total, double average) {}
+    record Employee(String name, int salary) {}
+    record SalarySummary(long total, double average) {}
 
     public static void main(String[] args) {
         List<Employee> employees = List.of(
@@ -4479,7 +4479,7 @@ B. コンパイルエラーが発生する。 - Collectors.teeing は Java 12 �
 C. SalarySummary[total=6000, average=6000.0] - この選択肢では合計給与の計算が誤っています。summingLong コレクターはストリームの全要素の合計を計算するため、18000 が正しい値です。
 D. SalarySummary{total=18000, average=6000.0} - 計算された合計値と平均値は正しいですが、record のデフォルトの toString()メソッドが出力する書式が異なります。record の toString()は、クラス名に続いて角括弧[]を使用します。
 
-````
+```
 
 94. 問題文: カレントディレクトリに以下の内容を持つ 2 つのファイル path1.txt と path2.txt が存在します。
 
@@ -4488,17 +4488,17 @@ D. SalarySummary{total=18000, average=6000.0} - 計算された合計値と平�
     path2.txt の内容: Javatest
     以下のコードを実行した際に出力される結果として正しいものはどれですか。（ファイル I/O に関する例外は発生しないものとします）
 
-    import java.nio.file.Files;
-    import java.nio.file.Path;
-    import java.nio.file.Paths;
-    import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.io.IOException;
 
 public class Main {
-public static void main(String[] args) throws IOException {
-Path p1 = Paths.get("path1.txt");
-Path p2 = Paths.get("path2.txt");
-System.out.println(Files.mismatch(p1, p2));
-}
+    public static void main(String[] args) throws IOException {
+        Path p1 = Paths.get("path1.txt");
+        Path p2 = Paths.get("path2.txt");
+        System.out.println(Files.mismatch(p1, p2));
+    }
 }
 
 ```
@@ -4523,21 +4523,21 @@ D. IOException がスローされる。 - Files.mismatch はファイルの読�
 
 ```
 
-95. 問題文: Connection オブジェクトが有効で、自動コミットモードが false に設定されているとします。以下の JDBC コードの断片を実行した後、変```java
-    数 result の内容に関する説明として最も適切なものはどれですか。（Sales 部門には 10 人、Engineering 部門には 15 人の従業員が存在し、SQL の実行は成功するものとします）
+95. 問題文: Connection オブジェクトが有効で、自動コミットモードが false に設定されているとします。以下の JDBC コードの断片を実行した後、変数 result の内容に関する説明として最も適切なものはどれですか。（Sales 部門には 10 人、Engineering 部門には 15 人の従業員が存在し、SQL の実行は成功するものとします）
 
-        String sql = "UPDATE employees SET salary = salary \* 1.1 WHERE department = ?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-        ps.setString(1, "Sales");
-        ps.addBatch();
+```java
+String sql = "UPDATE employees SET salary = salary * 1.1 WHERE department = ?";
+try (PreparedStatement ps = conn.prepareStatement(sql)) {
+    ps.setString(1, "Sales");
+    ps.addBatch();
 
-            ps.setString(1, "Engineering");
-            ps.addBatch();
+    ps.setString(1, "Engineering");
+    ps.addBatch();
 
-            int[] result = ps.executeBatch();
+    int[] result = ps.executeBatch();
 
-        }
-        // ... catch, commit/rollback 処理
+}
+// ... catch, commit/rollback 処理
 
 ```
 
@@ -4559,18 +4559,17 @@ B. result は、更新された行の総数である 25 を格納する int 型�
 C. result は、{10, 15}という内容を持つ int の配列となる。 - 正解です。executeBatch()メソッドは、バッチに追加された順序で各コマンドを実行し、それぞれのコマンドによって更新された行数を要素とする int 配列を返します。最初のコマンド（Sales 部門）で 10 行、2 番目のコマンド（Engineering 部門）で 15 行が更新されるため、{10, 15}という内容の配列が result に格納されます。
 D. result は、処理が成功したことを示す true を格納する boolean の配列となる。 - executeBatch()メソッドの戻り値の型は int[]です。Statement の execute()メソッドは boolean を返しますが、これは結果が ResultSet かどうかを示すものであり、バッチ処理の戻り値とは異なります。
 
-````
+```
 
-96. 問題文: @Task アノテーションを、以下の ScheduledTask クラスのように一つのクラスに複数回適用できるようにしたいと考えています。この要件を```java
-    満たすために必要なアノテーション定義の組み合わせとして、正しいものはどれですか。
+96. 問題文: @Task アノテーションを、以下の ScheduledTask クラスのように一つのクラスに複数回適用できるようにしたいと考えています。この要件を満たすために必要なアノテーション定義の組み合わせとして、正しいものはどれですか。
 
-        @Task(priority = "High")
-        @Task(priority = "Normal")
-        public class ScheduledTask {
-        // class members
-        }
-
-````
+```java
+@Task(priority = "High")
+@Task(priority = "Normal")
+public class ScheduledTask {
+    // class members
+}
+```
 
 ```
 
@@ -4608,8 +4607,7 @@ D. 正解です。アノテーションを繰り返し可能にするために�
 
 ```
 
-97. 問題文: Product レコードのリストがあり、これを部署ごとにグループ化し、各部署の製品数を数える Stream API のコードがあります。以下のコード
-    を実行した結果、コンソールに出力されるものはどれですか。（注：マップ内のエントリの順序は実行によって異なる場合があります）
+97. 問題文: Product レコードのリストがあり、これを部署ごとにグループ化し、各部署の製品数を数える Stream API のコードがあります。以下のコードを実行した結果、コンソールに出力されるものはどれですか。（注：マップ内のエントリの順序は実行によって異なる場合があります）
 
 ```java
 import java.util.List;
@@ -4755,30 +4753,30 @@ D. コンパイルエラーが発生する。 - このコードは、Java 17 で
 
 ```java
 
-        import java.util.List;
-        import java.util.ArrayList;
-        import java.util.stream.IntStream;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.IntStream;
 
 public class Main {
-public static void main(String[] args) {
-List<Integer> list = new ArrayList<>();
-IntStream.range(0, 10000)
-.parallel()
-.forEach(list::add);
-System.out.println(list.size());
-}
+    public static void main(String[] args) {
+        List<Integer> list = new ArrayList<>();
+        IntStream.range(0, 10000)
+        .parallel()
+        .forEach(list::add);
+        System.out.println(list.size());
+    }
 }
 
 ```
 
-```
+````
 
 A. 実行するたびに常に 10000 が出力される。
 B. ArrayList がスレッドセーフでないため、コンパイルエラーが発生する。
 C. 実行時に ConcurrentModificationException がスローされることが保証される。
 D. 競合状態が発生するため、10000 と出力される保証はなく、実行ごとに結果が異なる可能性がある。```
 
-```
+````
 
 ```
 
@@ -4790,4 +4788,3 @@ C. 実行時に ConcurrentModificationException がスローされることが�
 D. 競合状態が発生するため、10000 と出力される保証はなく、実行ごとに結果が異なる可能性がある。 - 正解です。ArrayList は同期化されていないコレクションです。並列ストリーム(parallel())とステートフルな中間操作（この場合は終端操作 forEach で外部の list の状態を変更している）を組み合わせると、複数のスレッドが同時に list にアクセスして変更しようとするため、競合状態（レースコンディション）が発生します。その結果、リストの最終的なサイズは予測不可能となり、10000 に満たない値になるか、あるいは実行時例外で失敗する可能性があります。
 
 ```
-
